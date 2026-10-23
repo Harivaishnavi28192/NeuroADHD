@@ -1,0 +1,96 @@
+{
+  "permutation_importance": {
+    "A_demographic_cognitive": [
+      {
+        "feature": "sex_male",
+        "mean": 0.1217
+      },
+      {
+        "feature": "performance_iq",
+        "mean": 0.026
+      },
+      {
+        "feature": "verbal_iq",
+        "mean": 0.0162
+      },
+      {
+        "feature": "age_sq",
+        "mean": 0.0082
+      },
+      {
+        "feature": "age",
+        "mean": 0.0071
+      },
+      {
+        "feature": "full_iq",
+        "mean": 0.0065
+      },
+      {
+        "feature": "iq_missing",
+        "mean": 0.0011
+      },
+      {
+        "feature": "iq_discrepancy",
+        "mean": 0.0003
+      },
+      {
+        "feature": "handedness",
+        "mean": 0.0
+      }
+    ],
+    "B_with_symptom_ratings": [
+      {
+        "feature": "adhd_index_sev",
+        "mean": 0.2511
+      },
+      {
+        "feature": "inattentive_sev",
+        "mean": 0.006
+      },
+      {
+        "feature": "sex_male",
+        "mean": 0.0031
+      },
+      {
+        "feature": "hyper_impulsive_sev",
+        "mean": 0.0028
+      },
+      {
+        "feature": "full_iq",
+        "mean": 0.0018
+      },
+      {
+        "feature": "verbal_iq",
+        "mean": 0.0014
+      },
+      {
+        "feature": "age_sq",
+        "mean": 0.0005
+      },
+      {
+        "feature": "age",
+        "mean": 0.0005
+      },
+      {
+        "feature": "handedness",
+        "mean": 0.0
+      },
+      {
+        "feature": "performance_iq",
+        "mean": 0.0
+      },
+      {
+        "feature": "iq_discrepancy",
+        "mean": 0.0
+      },
+      {
+        "feature": "iq_missing",
+        "mean": 0.0
+      },
+      {
+        "feature": "inatt_minus_hyper",
+        "mean": 0.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "n_subjects": 40,
+  "n_adhd": 20,
+  "n_control": 20,
+  "results": [
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "PCA + SVM (RBF)",
+      "accuracy": 0.5575,
+      "accuracy_sd": 0.0874,
+      "f1": 0.6815,
+      "roc_auc": 0.6262
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "KNN",
+      "accuracy": 0.555,
+      "accuracy_sd": 0.168,
+      "f1": 0.5628,
+      "roc_auc": 0.5681
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "Decision Tree",
+      "accuracy": 0.545,
+      "accuracy_sd": 0.1293,
+      "f1": 0.521,
+      "roc_auc": 0.545
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "Ridge",
+      "accuracy": 0.54,
+      "accuracy_sd": 0.1488,
+      "f1": 0.5408,
+      "roc_auc": 0.5738
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "Linear SVM",
+      "accuracy": 0.535,
+      "accuracy_sd": 0.1437,
+      "f1": 0.5374,
+      "roc_auc": 0.575
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "Random Forest",
+      "accuracy": 0.53,
+      "accuracy_sd": 0.1612,
+      "f1": 0.5189,
+      "roc_auc": 0.53
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "Logistic (L2)",
+      "accuracy": 0.525,
+      "accuracy_sd": 0.1479,
+      "f1": 0.5354,
+      "roc_auc": 0.5738
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "Random Forest",
+      "accuracy": 0.5225,
+      "accuracy_sd": 0.1451,
+      "f1": 0.5207,
+      "roc_auc": 0.4962
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "PCA + SVM (RBF)",
+      "accuracy": 0.5175,
+      "accuracy_sd": 0.0936,
+      "f1": 0.6524,
+      "roc_auc": 0.4875
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "Ridge",
+      "accuracy": 0.5175,
+      "accuracy_sd": 0.1581,
+      "f1": 0.5174,
+      "roc_auc": 0.4725
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "Linear SVM",
+      "accuracy": 0.5175,
+      "accuracy_sd": 0.1581,
+      "f1": 0.516,
+      "roc_auc": 0.4725
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "Logistic (L2)",
+      "accuracy": 0.515,
+      "accuracy_sd": 0.167,
+      "f1": 0.5109,
+      "roc_auc": 0.4638
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "Random Forest",
+      "accuracy": 0.515,
+      "accuracy_sd": 0.1613,
+      "f1": 0.5231,
+      "roc_auc": 0.4994
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "Random Forest",
+      "accuracy": 0.515,
+      "accuracy_sd": 0.1831,
+      "f1": 0.5257,
+      "roc_auc": 0.5125
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "KNN",
+      "accuracy": 0.5125,
+      "accuracy_sd": 0.1375,
+      "f1": 0.471,
+      "roc_auc": 0.4944
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "Linear SVM",
+      "accuracy": 0.5125,
+      "accuracy_sd": 0.1442,
+      "f1": 0.5017,
+      "roc_auc": 0.5162
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "Ridge",
+      "accuracy": 0.51,
+      "accuracy_sd": 0.1433,
+      "f1": 0.5003,
+      "roc_auc": 0.515
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "Logistic (L2)",
+      "accuracy": 0.5075,
+      "accuracy_sd": 0.1445,
+      "f1": 0.513,
+      "roc_auc": 0.52
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "Random Forest",
+      "accuracy": 0.505,
+      "accuracy_sd": 0.1749,
+      "f1": 0.4795,
+      "roc_auc": 0.5319
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "Decision Tree",
+      "accuracy": 0.5025,
+      "accuracy_sd": 0.138,
+      "f1": 0.4795,
+      "roc_auc": 0.5025
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "Decision Tree",
+      "accuracy": 0.5,
+      "accuracy_sd": 0.1581,
+      "f1": 0.463,
+      "roc_auc": 0.5
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "KNN",
+      "accuracy": 0.495,
+      "accuracy_sd": 0.1322,
+      "f1": 0.5982,
+      "roc_auc": 0.4531
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "Logistic (L2)",
+      "accuracy": 0.4925,
+      "accuracy_sd": 0.1423,
+      "f1": 0.4767,
+      "roc_auc": 0.4988
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "Logistic (L2)",
+      "accuracy": 0.4925,
+      "accuracy_sd": 0.1235,
+      "f1": 0.5088,
+      "roc_auc": 0.515
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "PCA + SVM (RBF)",
+      "accuracy": 0.4925,
+      "accuracy_sd": 0.0881,
+      "f1": 0.5911,
+      "roc_auc": 0.5588
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "PCA + SVM (RBF)",
+      "accuracy": 0.4925,
+      "accuracy_sd": 0.0581,
+      "f1": 0.3268,
+      "roc_auc": 0.37
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "Ridge",
+      "accuracy": 0.4875,
+      "accuracy_sd": 0.1546,
+      "f1": 0.4864,
+      "roc_auc": 0.515
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "Ridge",
+      "accuracy": 0.4825,
+      "accuracy_sd": 0.1581,
+      "f1": 0.467,
+      "roc_auc": 0.4775
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "Ridge",
+      "accuracy": 0.48,
+      "accuracy_sd": 0.1234,
+      "f1": 0.4948,
+      "roc_auc": 0.4975
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "Linear SVM",
+      "accuracy": 0.48,
+      "accuracy_sd": 0.1259,
+      "f1": 0.4968,
+      "roc_auc": 0.4962
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "correlation",
+      "model": "KNN",
+      "accuracy": 0.48,
+      "accuracy_sd": 0.1568,
+      "f1": 0.5032,
+      "roc_auc": 0.4869
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "Linear SVM",
+      "accuracy": 0.4775,
+      "accuracy_sd": 0.1652,
+      "f1": 0.467,
+      "roc_auc": 0.4788
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "PCA + SVM (RBF)",
+      "accuracy": 0.4775,
+      "accuracy_sd": 0.1217,
+      "f1": 0.5822,
+      "roc_auc": 0.4212
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "tangent",
+      "model": "PCA + SVM (RBF)",
+      "accuracy": 0.475,
+      "accuracy_sd": 0.1031,
+      "f1": 0.2519,
+      "roc_auc": 0.3375
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "Linear SVM",
+      "accuracy": 0.475,
+      "accuracy_sd": 0.1458,
+      "f1": 0.4713,
+      "roc_auc": 0.5138
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "Logistic (L2)",
+      "accuracy": 0.465,
+      "accuracy_sd": 0.1602,
+      "f1": 0.4486,
+      "roc_auc": 0.4788
+    },
+    {
+      "atlas": "basc64",
+      "connectivity": "partial correlation",
+      "model": "KNN",
+      "accuracy": 0.46,
+      "accuracy_sd": 0.1158,
+      "f1": 0.3411,
+      "roc_auc": 0.4881
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "KNN",
+      "accuracy": 0.4525,
+      "accuracy_sd": 0.1389,
+      "f1": 0.4218,
+      "roc_auc": 0.4256
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "correlation",
+      "model": "Decision Tree",
+      "accuracy": 0.4425,
+      "accuracy_sd": 0.1504,
+      "f1": 0.4478,
+      "roc_auc": 0.4425
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "Decision Tree",
+      "accuracy": 0.41,
+      "accuracy_sd": 0.148,
+      "f1": 0.3977,
+      "roc_auc": 0.4106
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "tangent",
+      "model": "Decision Tree",
+      "accuracy": 0.41,
+      "accuracy_sd": 0.1602,
+      "f1": 0.3687,
+      "roc_auc": 0.41
+    },
+    {
+      "atlas": "msdl",
+      "connectivity": "partial correlation",
+      "model": "Random Forest",
+      "accuracy": 0.3375,
+      "accuracy_sd": 0.1566,
+      "f1": 0.3277,
+      "roc_auc": 0.2975
+    }
+  ],
+  "best": {
+    "atlas": "msdl",
+    "connectivity": "correlation",
+    "model": "PCA + SVM (RBF)",
+    "accuracy": 0.5575,
+    "f1": 0.6815252525252524,
+    "roc_auc": 0.62625
+  },
+  "permutation": {
+    "score": 0.6,
+    "p_value": 0.10578842315369262,
+    "null_mean": 0.49539999999999995
+  },
+  "confusion": {
+    "Linear SVM": [
+      [
+        9,
+        11
+      ],
+      [
+        12,
+        8
+      ]
+    ],
+    "Random Forest": [
+      [
+        14,
+        6
+      ],
+      [
+        9,
+        11
+      ]
+    ],
+    "Decision Tree": [
+      [
+        10,
+        10
+      ],
+      [
+        12,
+        8
+      ]
+    ]
+  }
+}

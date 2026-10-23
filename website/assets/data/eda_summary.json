@@ -1,0 +1,98 @@
+{
+  "n_children": 935,
+  "n_adhd": 359,
+  "n_td": 576,
+  "n_sites": 9,
+  "n_with_ratings": 477,
+  "subtypes": {
+    "TD": 576,
+    "ADHD-C": 209,
+    "ADHD-I": 137,
+    "ADHD-H": 13
+  },
+  "site_table": {
+    "Peking_3": {
+      "TD": 23,
+      "ADHD": 19
+    },
+    "WashU": {
+      "TD": 60,
+      "ADHD": 0
+    },
+    "Peking_2": {
+      "TD": 32,
+      "ADHD": 35
+    },
+    "NeuroIMAGE": {
+      "TD": 37,
+      "ADHD": 36
+    },
+    "KKI": {
+      "TD": 61,
+      "ADHD": 22
+    },
+    "Pittsburgh": {
+      "TD": 94,
+      "ADHD": 4
+    },
+    "OHSU": {
+      "TD": 70,
+      "ADHD": 43
+    },
+    "Peking_1": {
+      "TD": 88,
+      "ADHD": 48
+    },
+    "NYU": {
+      "TD": 111,
+      "ADHD": 152
+    }
+  },
+  "age_range": [
+    7.09,
+    26.31
+  ],
+  "pct_male": 0.619914346895075,
+  "effect_sizes": [
+    {
+      "feature": "age",
+      "cohens_d": -0.1762,
+      "mann_whitney_p": 0.0275
+    },
+    {
+      "feature": "handedness",
+      "cohens_d": -0.0042,
+      "mann_whitney_p": 0.9741
+    },
+    {
+      "feature": "verbal_iq",
+      "cohens_d": -0.4704,
+      "mann_whitney_p": 0.0
+    },
+    {
+      "feature": "performance_iq",
+      "cohens_d": -0.5536,
+      "mann_whitney_p": 0.0
+    },
+    {
+      "feature": "full_iq",
+      "cohens_d": -0.565,
+      "mann_whitney_p": 0.0
+    },
+    {
+      "feature": "adhd_index_sev",
+      "cohens_d": 2.8718,
+      "mann_whitney_p": 0.0
+    },
+    {
+      "feature": "inattentive_sev",
+      "cohens_d": 2.5046,
+      "mann_whitney_p": 0.0
+    },
+    {
+      "feature": "hyper_impulsive_sev",
+      "cohens_d": 1.9848,
+      "mann_whitney_p": 0.0
+    }
+  ]
+}

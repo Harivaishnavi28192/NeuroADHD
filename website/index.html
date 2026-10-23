@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuroADHD · ADHD Prediction</title>
+  <meta name="description" content="A data science project asking how well machine learning can predict an ADHD diagnosis, using ADHD-200 clinical data and resting-state fMRI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%232a78d6'/><circle cx='16' cy='16' r='6' fill='%23eb6834'/></svg>">
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a class="brand" href="#top" aria-label="NeuroADHD home">
+      <span class="brand__dot" aria-hidden="true"></span>NeuroADHD
+    </a>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="nav-links" class="nav__links" aria-label="Sections">
+      <a href="#project">Project</a>
+      <a href="#data">Data</a>
+      <a href="#eda">EDA</a>
+      <a href="#models">Models</a>
+      <a href="#interpretation">Interpretation</a>
+      <a href="#fmri">fMRI</a>
+      <a href="#demo">Try it</a>
+      <a href="#notebooks">Notebooks</a>
+    </nav>
+  </div>
+  <div class="nav__progress" aria-hidden="true"></div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__text">
+      <p class="eyebrow">A data science project</p>
+      <h1>ADHD diagnosis prediction using machine learning</h1>
+      <p class="lead">I wanted to find out how far machine learning can go in predicting an ADHD diagnosis. Using the public <strong>ADHD-200</strong> dataset (935 children from nine clinics), I cleaned and explored the data, compared 13 algorithms, looked inside the models to understand their decisions, and tested whether brain scans add anything.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#models">See what I found</a>
+        <a class="btn" href="#notebooks">Read the notebooks</a>
+        <a class="btn btn--ghost" href="#demo">Try the model</a>
+      </div>
+    </div>
+    <figure class="hero__fig card">
+      <img src="assets/img/02_symptom_scatter.png" alt="Scatter plot of inattention versus hyperactivity severity by diagnostic subtype" loading="eager">
+      <figcaption>How parents rated each child's inattention and hyperactivity, coloured by diagnosis. The groups separate clearly, which turned out to be both helpful and a trap.</figcaption>
+    </figure>
+  </div>
+
+  <div class="wrap">
+    <div class="stats" aria-label="Key numbers">
+      <div class="stat"><span class="stat__value" data-bind="eda.n_children">935</span><span class="stat__label">children in the study</span></div>
+      <div class="stat"><span class="stat__value" data-bind="eda.n_sites">9</span><span class="stat__label">clinics</span></div>
+      <div class="stat"><span class="stat__value">13</span><span class="stat__label">algorithms compared</span></div>
+      <div class="stat"><span class="stat__value" data-bind="test.A.roc_auc" data-fmt="2">–</span><span class="stat__label">score without a questionnaire (AUC)</span></div>
+      <div class="stat"><span class="stat__value" data-bind="test.B.roc_auc" data-fmt="2">–</span><span class="stat__label">score with parent ratings (AUC)</span></div>
+      <div class="stat"><span class="stat__value" data-bind="fmri.n_subjects">40</span><span class="stat__label">brain scans analysed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECT DEFINITION ============ -->
+<section class="section" id="project">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">01 · The project</p>
+      <h2>What I set out to do</h2>
+    </header>
+
+    <div class="grid grid--4">
+      <article class="card pad">
+        <h3>Why ADHD?</h3>
+        <p>ADHD affects roughly <strong>5–7&nbsp;% of children</strong>. Diagnosing it takes interviews and questionnaires, which is slow, and clinicians don't always agree. I wanted to know whether a model could pick up the same patterns from simpler data, and to be honest about where it can't.</p>
+      </article>
+      <article class="card pad">
+        <h3>My goals</h3>
+        <ul class="ticks">
+          <li>Combine messy data from ten clinics into one clean table</li>
+          <li>Understand how the groups differ before modelling</li>
+          <li>Compare many models fairly</li>
+          <li>Explain why the models decide what they do</li>
+          <li>See if brain connectivity helps</li>
+        </ul>
+      </article>
+      <article class="card pad">
+        <h3>Two questions</h3>
+        <p><span class="pill pill--a">Set A</span> Can ADHD be predicted from <strong>age, sex and IQ alone</strong>, with no questionnaire?</p>
+        <p><span class="pill pill--b">Set B</span> How well does a <strong>screening model</strong> work once parents' symptom ratings are added?</p>
+      </article>
+      <article class="card pad">
+        <h3>What I built</h3>
+        <ul class="ticks">
+          <li>6 Jupyter notebooks, run from start to finish</li>
+          <li>A small Python package, <code>src/neuroadhd</code></li>
+          <li>Trained models you can reload (<code>.joblib</code>)</li>
+          <li>39 figures and result files</li>
+          <li>This website</li>
+        </ul>
+      </article>
+    </div>
+
+    <h3 class="subhead">Tools I used</h3>
+    <div class="chips">
+      <span class="chip">Python 3</span><span class="chip">Jupyter</span><span class="chip">pandas</span><span class="chip">NumPy</span>
+      <span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span>
+      <span class="chip">LightGBM</span><span class="chip">imbalanced-learn</span><span class="chip">SHAP</span><span class="chip">nilearn</span>
+      <span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">Chart.js</span><span class="chip">Git</span>
+    </div>
+
+    <h3 class="subhead">How the work flowed</h3>
+    <ol class="pipeline">
+      <li><span class="pipeline__n">1</span><strong>Collect</strong><small>download the files from all ten clinics</small></li>
+      <li><span class="pipeline__n">2</span><strong>Clean</strong><small>make codes and scales agree, remove duplicates</small></li>
+      <li><span class="pipeline__n">3</span><strong>Explore</strong><small>charts, tests and effect sizes</small></li>
+      <li><span class="pipeline__n">4</span><strong>Prepare</strong><small>fill gaps, scale, balance, pick features</small></li>
+      <li><span class="pipeline__n">5</span><strong>Model</strong><small>13 algorithms, tuning, ensembles</small></li>
+      <li><span class="pipeline__n">6</span><strong>Test</strong><small>unseen children and unseen clinics</small></li>
+      <li><span class="pipeline__n">7</span><strong>Explain</strong><small>what drives each prediction</small></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ DATA ============ -->
+<section class="section section--alt" id="data">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">02 · The data</p>
+      <h2>The data I worked with</h2>
+      <p class="section__intro">The <a href="http://fcon_1000.projects.nitrc.org/indi/adhd200/" target="_blank" rel="noopener">ADHD-200 Consortium</a> shared clinical records and brain scans from children and teenagers at clinics in the USA, China and the Netherlands. The catch is that every clinic recorded things a little differently, so most of the early work was getting them to agree.</p>
+    </header>
+
+    <div class="grid grid--2-1">
+      <figure class="card fig">
+        <img src="assets/img/01_raw_column_coverage.png" alt="Heatmap of which variables each clinic recorded" loading="lazy">
+        <figcaption>Which details each clinic recorded. Brown never released its diagnoses, and symptom ratings only exist for NYU and the three Peking clinics.</figcaption>
+      </figure>
+      <div class="card pad">
+        <h3>How I cleaned it</h3>
+        <table class="table">
+          <tbody>
+            <tr><th>Missing values</th><td><code>-999</code> and <code>N/A</code> treated as missing</td></tr>
+            <tr><th>Duplicates</th><td>101 repeated rows removed</td></tr>
+            <tr><th>Diagnosis</th><td>typically developing → 0, any ADHD type → 1</td></tr>
+            <tr><th>Handedness</th><td>recorded the same way at every clinic (right / left)</td></tr>
+            <tr><th>Questionnaires</th><td>two different rating scales put on one 0–1 scale</td></tr>
+            <tr><th>IQ</th><td>full 4-part score, or the 2-part score if that's all there was</td></tr>
+            <tr><th>Set aside</th><td>Brown's 26 children (no diagnoses released)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid grid--2">
+      <figure class="card fig">
+        <img src="assets/img/02_target_distribution.png" alt="Bar charts of diagnosis and subtypes" loading="lazy">
+        <figcaption>About 38&nbsp;% of the children have ADHD. The hyperactive/impulsive type is rare, with only 13 children.</figcaption>
+      </figure>
+      <figure class="card fig">
+        <img src="assets/img/02_site_distribution.png" alt="Stacked bar of diagnosis by clinic" loading="lazy">
+        <figcaption>The share of ADHD cases ranges from 0&nbsp;% to 58&nbsp;% depending on the clinic. That ended up being one of the most important facts in the whole project.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDA ============ -->
+<section class="section" id="eda">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">03 · Exploring the data</p>
+      <h2>How do children with ADHD differ?</h2>
+      <p class="section__intro">Before training anything, I wanted to see what actually separates children with ADHD from typically developing children, and what might mislead a model. Four things stood out.</p>
+    </header>
+
+    <div class="insights">
+      <div class="insight"><span class="insight__k">Sex</span><p>Boys were diagnosed about <strong>twice as often</strong> as girls (49&nbsp;% vs 22&nbsp;%).</p></div>
+      <div class="insight"><span class="insight__k">IQ</span><p>Children with ADHD scored a little lower on every IQ test, but the two groups overlap a lot.</p></div>
+      <div class="insight"><span class="insight__k">Symptoms</span><p>Parents' ratings separate the groups almost perfectly, because they're part of how ADHD is diagnosed.</p></div>
+      <div class="insight"><span class="insight__k">Clinic</span><p>Which clinic a child went to is strongly linked to their diagnosis. That's a warning sign for any model.</p></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Exploration figures">
+      <button role="tab" aria-selected="true" data-tab="eda-demo">Demographics</button>
+      <button role="tab" aria-selected="false" data-tab="eda-iq">IQ</button>
+      <button role="tab" aria-selected="false" data-tab="eda-sym">Symptoms</button>
+      <button role="tab" aria-selected="false" data-tab="eda-stats">Statistics</button>
+      <button role="tab" aria-selected="false" data-tab="eda-multi">Big picture</button>
+    </div>
+
+    <div class="tabpanel" id="eda-demo" role="tabpanel">
+      <figure class="card fig"><img src="assets/img/02_demographics.png" alt="Age, sex and handedness by group" loading="lazy"><figcaption>Age, sex and handedness for each group.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/02_age_by_site.png" alt="Age by clinic" loading="lazy"><figcaption>Each clinic recruited a different age range, so age quietly tells a model which clinic a child came from.</figcaption></figure>
+    </div>
+    <div class="tabpanel" id="eda-iq" role="tabpanel" hidden>
+      <figure class="card fig"><img src="assets/img/02_iq_violin.png" alt="IQ violin plots" loading="lazy"><figcaption>Verbal, performance and overall IQ for each group.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/02_pairplot.png" alt="Pair plot" loading="lazy"><figcaption>Without symptom ratings, the two groups overlap heavily on every measure.</figcaption></figure>
+    </div>
+    <div class="tabpanel" id="eda-sym" role="tabpanel" hidden>
+      <figure class="card fig"><img src="assets/img/02_symptom_hist.png" alt="Symptom severity histograms" loading="lazy"><figcaption>How severe parents rated each child's symptoms.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/02_symptom_scatter.png" alt="Symptom scatter by subtype" loading="lazy"><figcaption>Each ADHD type sits where its clinical definition says it should.</figcaption></figure>
+    </div>
+    <div class="tabpanel" id="eda-stats" role="tabpanel" hidden>
+      <figure class="card fig"><img src="assets/img/02_effect_sizes.png" alt="Effect sizes" loading="lazy"><figcaption>How big each difference is (Cohen's d). Symptom ratings dwarf everything else.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/02_correlation_heatmap.png" alt="Correlation heatmap" loading="lazy"><figcaption>The three IQ scores move together, so they carry overlapping information.</figcaption></figure>
+    </div>
+    <div class="tabpanel" id="eda-multi" role="tabpanel" hidden>
+      <figure class="card fig"><img src="assets/img/02_projections.png" alt="PCA and t-SNE" loading="lazy"><figcaption>Squeezing everything into two dimensions (PCA and t-SNE) shows no clean "ADHD cluster".</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/01_missing_values.png" alt="Missing values" loading="lazy"><figcaption>Missing values follow the clinics, not chance.</figcaption></figure>
+    </div>
+
+    <h3 class="subhead">Preparing the data, based on evidence</h3>
+    <div class="grid grid--3">
+      <figure class="card fig"><img src="assets/img/03_imputation_comparison.png" alt="Imputation comparison" loading="lazy"><figcaption><strong>Filling gaps:</strong> four methods worked equally well, so I kept the simplest one (the median).</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/03_imbalance_comparison.png" alt="Class imbalance comparison" loading="lazy"><figcaption><strong>Balancing:</strong> without it the model missed half the ADHD cases. Weighting the classes raised the catch rate from 49&nbsp;% to 67&nbsp;%.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/03_feature_selection.png" alt="Feature selection" loading="lazy"><figcaption><strong>Choosing features:</strong> every method ranked the symptom ratings far above everything else.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODELS ============ -->
+<section class="section section--alt" id="models">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">04 · Results</p>
+      <h2>How well did the models do?</h2>
+      <p class="section__intro">I compared 13 algorithms against a simple "always guess the most common answer" baseline, using 80&nbsp;% of the children. I tuned the four best, tried combining them, and only then tested on the remaining 20&nbsp;%, <strong>once</strong>. That final score is the one I trust.</p>
+    </header>
+
+    <div class="card pad chart-card">
+      <div class="chart-card__head">
+        <div>
+          <h3>How each algorithm scored</h3>
+          <p class="muted">Hover over a bar to see all the numbers. The dashed line is what random guessing would get (0.5).</p>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Feature set">
+          <button role="radio" aria-checked="true" data-set="A_demographic_cognitive">Set A · no questionnaire</button>
+          <button role="radio" aria-checked="false" data-set="B_with_symptom_ratings">Set B · with ratings</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="cvChart" aria-label="Bar chart of cross-validated ROC-AUC per model" role="img"></canvas></div>
+      <details class="table-toggle"><summary>Show as a table</summary><div class="table-scroll"><table class="table table--data" id="cvTable"></table></div></details>
+    </div>
+
+    <h3 class="subhead">Final scores on children the models had never seen</h3>
+    <div class="grid grid--2" id="testCards"></div>
+
+    <figure class="card fig fig--wide"><img src="assets/img/04_roc_pr_calibration.png" alt="ROC, PR and calibration curves" loading="lazy"><figcaption>Three ways of looking at the final scores. The model with parent ratings (orange) is far ahead of the one without them (blue).</figcaption></figure>
+    <div class="grid grid--2-1">
+      <figure class="card fig"><img src="assets/img/04_confusion_matrices.png" alt="Confusion matrices" loading="lazy"><figcaption>Right and wrong answers for each model on the test children.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/04_subtype_confusion.png" alt="Subtype confusion matrix" loading="lazy"><figcaption>A harder side question: telling the ADHD types apart. Accuracy <span data-bind="subtype.accuracy" data-fmt="2">–</span>.</figcaption></figure>
+    </div>
+
+    <h3 class="subhead">Would it work at a new clinic?</h3>
+    <div class="grid grid--2-1">
+      <figure class="card fig"><img src="assets/img/04_leave_one_site_out.png" alt="Leave-one-clinic-out results" loading="lazy"><figcaption>I trained on eight clinics and tested on the ninth, one clinic at a time. Results swing a lot depending on the clinic.</figcaption></figure>
+      <div class="card pad">
+        <h3>The clinic problem</h3>
+        <p class="muted">Logistic regression on Set A, cross-validated AUC:</p>
+        <div class="bars" id="confoundBars"></div>
+        <p>Given <strong>only the clinic's name</strong>, a model already scores 0.70. Adding it would make the numbers look better without helping a new clinic at all, so I left it out.</p>
+        <h3 class="mt">Is it fair to girls?</h3>
+        <div class="table-scroll"><table class="table table--data" id="subgroupTable"></table></div>
+        <p class="small muted">Without a questionnaire, the model catches far fewer ADHD cases in girls. It learned that "boy" is a strong clue, which mirrors a real bias in how ADHD gets diagnosed.</p>
+      </div>
+    </div>
+
+    <figure class="card fig fig--wide"><img src="assets/img/04_model_comparison_cv.png" alt="Model comparison, both feature sets" loading="lazy"><figcaption>All 13 models side by side for both questions, with the spread across test folds.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ INTERPRETATION ============ -->
+<section class="section" id="interpretation">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">05 · Explainability</p>
+      <h2>Why does the model decide what it decides?</h2>
+      <p class="section__intro">A score alone doesn't tell you <em>why</em> a model makes a decision, and in anything medical the why matters. So I looked inside the models with permutation importance and SHAP. It turned out to be the most interesting part of the project.</p>
+    </header>
+    <div class="grid grid--2">
+      <figure class="card fig"><img src="assets/img/05_shap_beeswarm_SetA.png" alt="SHAP summary Set A" loading="lazy"><figcaption><strong>Without a questionnaire:</strong> being a boy and having a lower IQ push predictions toward ADHD. <strong>What surprised me:</strong> the first time I ran this, <em>handedness</em> came out as the second most important feature. It turned out NYU, where 58&nbsp;% of children have ADHD, recorded handedness differently from every other clinic. Once I fixed that, its importance dropped to zero.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/05_shap_beeswarm_SetB.png" alt="SHAP summary Set B" loading="lazy"><figcaption><strong>With parent ratings:</strong> the overall ADHD score from the questionnaire outweighs everything else.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/05_permutation_importance.png" alt="Permutation importance" loading="lazy"><figcaption>How much the score drops when each feature is scrambled.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/05_shap_individual.png" alt="Individual SHAP explanations" loading="lazy"><figcaption>The reasoning behind two individual predictions.</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/05_partial_dependence.png" alt="Partial dependence" loading="lazy"><figcaption>How the prediction changes with age and IQ, on average (orange) and for each child (blue).</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/05_error_analysis.png" alt="Error analysis" loading="lazy"><figcaption>Who the model gets wrong: missed cases are mostly girls and children with a high IQ.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FMRI ============ -->
+<section class="section section--alt" id="fmri">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">06 · Brain connectivity</p>
+      <h2>Can brain scans tell the difference?</h2>
+      <p class="section__intro">For this part I used resting-state fMRI scans from <strong>40 children</strong>. I split each brain into regions, measured how strongly each pair of regions works together, and gave those connections to the models. I tried <strong>two brain maps</strong> and <strong>three ways of measuring connectivity</strong>, repeated every test many times, and checked the best result against pure luck.</p>
+    </header>
+
+    <div class="grid grid--2">
+      <figure class="card fig"><img src="assets/img/06_atlases.png" alt="MSDL and BASC atlases" loading="lazy"><figcaption>The two brain maps I used to divide the brain into regions: MSDL (39 regions) and BASC (64 regions).</figcaption></figure>
+      <figure class="card fig"><img src="assets/img/06_connectome.png" alt="Connectome plots" loading="lazy"><figcaption>The strongest 5&nbsp;% of connections in each group.</figcaption></figure>
+    </div>
+    <figure class="card fig fig--wide"><img src="assets/img/06_connectivity_matrices.png" alt="Connectivity matrices" loading="lazy"><figcaption>Average connections for children without ADHD, with ADHD, and the difference between them. The differences are small and scattered.</figcaption></figure>
+
+    <figure class="card fig fig--wide"><img src="assets/img/06_fmri_model_comparison.png" alt="fMRI model comparison" loading="lazy"><figcaption>Seven models, three connectivity measures and two brain maps. Almost every bar sits close to the 0.5 line, which is what guessing would get.</figcaption></figure>
+    <div class="grid grid--2">
+      <div class="card pad">
+        <h3>Best result for each model</h3>
+        <div class="table-scroll"><table class="table table--data" id="fmriCompare"></table></div>
+        <p class="muted small" id="fmriNote"></p>
+        <p class="small">My take: 40 scans just aren't enough. With hundreds of connections per child and so few children, the models can't find a reliable pattern.</p>
+      </div>
+      <div class="stack">
+        <figure class="card fig"><img src="assets/img/06_permutation_test.png" alt="Permutation test" loading="lazy"><figcaption>I re-ran the best model 500 times with shuffled labels. Its real score isn't clearly better than luck.</figcaption></figure>
+        <figure class="card fig"><img src="assets/img/06_fmri_confusion.png" alt="fMRI confusion matrices" loading="lazy"><figcaption>Right and wrong answers for three of the models.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEMO ============ -->
+<section class="section" id="demo">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">07 · Try it yourself</p>
+      <h2>Try the model</h2>
+      <p class="section__intro">This runs the project's simplest model (a logistic regression) right in your browser. Change the values and watch the prediction and its reasons update. Empty boxes are filled in with typical values from the data. It's best to fill in both IQ boxes, because a missing IQ mostly hints at which clinic a child came from.</p>
+    </header>
+    <div class="callout callout--warn" role="note"><strong>Please note:</strong> this is a learning demo, not a diagnostic tool. Only a qualified clinician can diagnose ADHD.</div>
+
+    <div class="demo">
+      <form class="card pad demo__form" id="demoForm" autocomplete="off">
+        <div class="seg seg--full" role="radiogroup" aria-label="Model">
+          <button type="button" role="radio" aria-checked="true" data-model="A_demographic_cognitive">Set A · age, sex and IQ</button>
+          <button type="button" role="radio" aria-checked="false" data-model="B_with_symptom_ratings">Set B · + parent ratings</button>
+        </div>
+        <div class="form-grid">
+          <label>Age (years)<input type="number" name="age" min="6" max="26" step="0.1" value="10"></label>
+          <label>Sex<select name="sex_male"><option value="1">Male</option><option value="0">Female</option></select></label>
+          <label>Handedness<select name="handedness"><option value="1">Right</option><option value="0">Mixed</option><option value="-1">Left</option></select></label>
+          <label>Verbal IQ<input type="number" name="verbal_iq" min="50" max="160" value="110" placeholder="e.g. 110"></label>
+          <label>Performance IQ<input type="number" name="performance_iq" min="50" max="160" value="105" placeholder="e.g. 105"></label>
+          <label>Full-scale IQ<input type="number" name="full_iq" min="50" max="160" value="108"></label>
+        </div>
+        <fieldset class="symptoms" disabled>
+          <legend>Parent ratings <span class="muted">(Set B only)</span></legend>
+          <label>Rating scale<select name="scale"><option value="ADHD-RS">ADHD Rating Scale IV (items 1–4)</option><option value="Conners">Conners' (T-scores)</option></select></label>
+          <label>ADHD index / total<input type="number" name="adhd_index" placeholder="ADHD-RS 18–72"></label>
+          <label>Inattentive<input type="number" name="inattentive" placeholder="ADHD-RS 9–36"></label>
+          <label>Hyperactive / impulsive<input type="number" name="hyper_impulsive" placeholder="ADHD-RS 9–36"></label>
+        </fieldset>
+      </form>
+
+      <div class="card pad demo__out" aria-live="polite">
+        <p class="muted">Chance this profile belongs to the ADHD group</p>
+        <div class="gauge">
+          <div class="gauge__track"><div class="gauge__fill" id="gaugeFill"></div><div class="gauge__thr" id="gaugeThr" title="decision threshold"></div></div>
+          <div class="gauge__scale"><span>0&nbsp;%</span><span>50&nbsp;%</span><span>100&nbsp;%</span></div>
+        </div>
+        <p class="demo__prob" id="demoProb">–</p>
+        <p class="demo__label" id="demoLabel">–</p>
+        <h4>What pushed the prediction</h4>
+        <div class="contrib" id="demoContrib"></div>
+        <p class="muted small" id="demoModelInfo"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NOTEBOOKS ============ -->
+<section class="section section--alt" id="notebooks">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">08 · The notebooks</p>
+      <h2>Read the full work</h2>
+      <p class="section__intro">Everything above comes from six Jupyter notebooks, run from top to bottom with all their outputs saved. You can read each one here, or download it and run it yourself.</p>
+    </header>
+    <div class="grid grid--3" id="nbGrid"></div>
+
+    <h3 class="subhead">How the project is organised</h3>
+<pre class="tree card"><code>NeuroADHD/
+├── data/
+│   ├── raw/                     the original files from the 10 clinics
+│   └── processed/               cleaned tables, splits, brain-scan signals
+├── notebooks/                   01 → 06, run with outputs saved
+├── src/neuroadhd/               reusable code: config · data · features · fmri · plotting
+├── models/                      the final trained models
+├── reports/                     figures, results and predictions
+├── scripts/build_website.py     puts the results into this site
+├── website/                     ← this page
+├── requirements.txt
+└── README.md</code></pre>
+  </div>
+</section>
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged figure">
+  <button class="lightbox__close" aria-label="Close">×</button>
+  <img alt="">
+  <p class="lightbox__cap"></p>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

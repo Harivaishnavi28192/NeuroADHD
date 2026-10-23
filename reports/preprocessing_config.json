@@ -1,0 +1,140 @@
+{
+  "split": {
+    "test_size": 0.2,
+    "stratify": "site x diagnosis",
+    "random_state": 42,
+    "n_train": 748,
+    "n_test": 187
+  },
+  "imputer": "median",
+  "scaler": "standard",
+  "imbalance": "class_weight=balanced",
+  "feature_sets": {
+    "A_demographic_cognitive": {
+      "numeric": [
+        "age",
+        "sex_male",
+        "handedness",
+        "verbal_iq",
+        "performance_iq",
+        "full_iq",
+        "iq_discrepancy",
+        "iq_missing",
+        "age_sq"
+      ],
+      "categorical": []
+    },
+    "B_with_symptom_ratings": {
+      "numeric": [
+        "age",
+        "sex_male",
+        "handedness",
+        "verbal_iq",
+        "performance_iq",
+        "full_iq",
+        "iq_discrepancy",
+        "iq_missing",
+        "age_sq",
+        "adhd_index_sev",
+        "inattentive_sev",
+        "hyper_impulsive_sev",
+        "inatt_minus_hyper"
+      ],
+      "categorical": []
+    }
+  },
+  "rfecv_selected_setA": [
+    "age",
+    "sex_male",
+    "verbal_iq",
+    "performance_iq",
+    "full_iq",
+    "iq_discrepancy",
+    "iq_missing",
+    "age_sq"
+  ],
+  "imputation_cv": [
+    {
+      "imputer": "mean",
+      "model": "Logistic Regression",
+      "auc": 0.7343,
+      "sd": 0.0404
+    },
+    {
+      "imputer": "mean",
+      "model": "Random Forest",
+      "auc": 0.7171,
+      "sd": 0.0415
+    },
+    {
+      "imputer": "median",
+      "model": "Logistic Regression",
+      "auc": 0.7349,
+      "sd": 0.0407
+    },
+    {
+      "imputer": "median",
+      "model": "Random Forest",
+      "auc": 0.7134,
+      "sd": 0.0406
+    },
+    {
+      "imputer": "knn",
+      "model": "Logistic Regression",
+      "auc": 0.7383,
+      "sd": 0.0447
+    },
+    {
+      "imputer": "knn",
+      "model": "Random Forest",
+      "auc": 0.6938,
+      "sd": 0.0343
+    },
+    {
+      "imputer": "iterative",
+      "model": "Logistic Regression",
+      "auc": 0.7354,
+      "sd": 0.0403
+    },
+    {
+      "imputer": "iterative",
+      "model": "Random Forest",
+      "auc": 0.7081,
+      "sd": 0.045
+    }
+  ],
+  "imbalance_cv": [
+    {
+      "strategy": "none",
+      "roc_auc": 0.735,
+      "balanced_accuracy": 0.652,
+      "recall": 0.488,
+      "precision": 0.631,
+      "f1": 0.548
+    },
+    {
+      "strategy": "class_weight",
+      "roc_auc": 0.735,
+      "balanced_accuracy": 0.666,
+      "recall": 0.669,
+      "precision": 0.556,
+      "f1": 0.606
+    },
+    {
+      "strategy": "SMOTE",
+      "roc_auc": 0.733,
+      "balanced_accuracy": 0.66,
+      "recall": 0.662,
+      "precision": 0.547,
+      "f1": 0.598
+    },
+    {
+      "strategy": "under-sample",
+      "roc_auc": 0.735,
+      "balanced_accuracy": 0.671,
+      "recall": 0.673,
+      "precision": 0.561,
+      "f1": 0.611
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# Caches created by nilearn / joblib inside notebooks/
+notebooks/nilearn_cache/
+**/joblib_memmapping*/
+
+# Large generated data (re-created by the notebooks)
+data/processed/fmri_timeseries_*.npz
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/

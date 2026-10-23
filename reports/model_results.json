@@ -1,0 +1,622 @@
+{
+  "cv_comparison": [
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Baseline (majority)",
+      "roc_auc": 0.5,
+      "roc_auc_sd": 0.0,
+      "balanced_accuracy": 0.5,
+      "f1": 0.0,
+      "recall": 0.0,
+      "precision": 0.0,
+      "accuracy": 0.6163
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Logistic Regression",
+      "roc_auc": 0.7349,
+      "roc_auc_sd": 0.0407,
+      "balanced_accuracy": 0.6665,
+      "f1": 0.6062,
+      "recall": 0.669,
+      "precision": 0.556,
+      "accuracy": 0.6658
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "LDA",
+      "roc_auc": 0.7348,
+      "roc_auc_sd": 0.0406,
+      "balanced_accuracy": 0.6553,
+      "f1": 0.5538,
+      "recall": 0.4949,
+      "precision": 0.6342,
+      "accuracy": 0.6925
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Gaussian NB",
+      "roc_auc": 0.7066,
+      "roc_auc_sd": 0.0431,
+      "balanced_accuracy": 0.6571,
+      "f1": 0.5752,
+      "recall": 0.5745,
+      "precision": 0.5789,
+      "accuracy": 0.6765
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "KNN",
+      "roc_auc": 0.7032,
+      "roc_auc_sd": 0.0514,
+      "balanced_accuracy": 0.6284,
+      "f1": 0.52,
+      "recall": 0.4738,
+      "precision": 0.5789,
+      "accuracy": 0.6644
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "SVM (RBF)",
+      "roc_auc": 0.7207,
+      "roc_auc_sd": 0.0443,
+      "balanced_accuracy": 0.6463,
+      "f1": 0.5848,
+      "recall": 0.6483,
+      "precision": 0.5336,
+      "accuracy": 0.6458
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Decision Tree",
+      "roc_auc": 0.6854,
+      "roc_auc_sd": 0.0369,
+      "balanced_accuracy": 0.6463,
+      "f1": 0.5812,
+      "recall": 0.6374,
+      "precision": 0.5359,
+      "accuracy": 0.6483
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Random Forest",
+      "roc_auc": 0.7142,
+      "roc_auc_sd": 0.0399,
+      "balanced_accuracy": 0.6628,
+      "f1": 0.5875,
+      "recall": 0.5923,
+      "precision": 0.5857,
+      "accuracy": 0.6791
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Extra Trees",
+      "roc_auc": 0.7328,
+      "roc_auc_sd": 0.0408,
+      "balanced_accuracy": 0.6767,
+      "f1": 0.6112,
+      "recall": 0.6482,
+      "precision": 0.5803,
+      "accuracy": 0.6832
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "AdaBoost",
+      "roc_auc": 0.7265,
+      "roc_auc_sd": 0.0341,
+      "balanced_accuracy": 0.6456,
+      "f1": 0.5276,
+      "recall": 0.4495,
+      "precision": 0.6413,
+      "accuracy": 0.6912
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Gradient Boosting",
+      "roc_auc": 0.7068,
+      "roc_auc_sd": 0.0327,
+      "balanced_accuracy": 0.6161,
+      "f1": 0.4979,
+      "recall": 0.4491,
+      "precision": 0.5635,
+      "accuracy": 0.6551
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "XGBoost",
+      "roc_auc": 0.701,
+      "roc_auc_sd": 0.0335,
+      "balanced_accuracy": 0.6457,
+      "f1": 0.5736,
+      "recall": 0.606,
+      "precision": 0.5451,
+      "accuracy": 0.655
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "LightGBM",
+      "roc_auc": 0.683,
+      "roc_auc_sd": 0.0326,
+      "balanced_accuracy": 0.634,
+      "f1": 0.5567,
+      "recall": 0.5781,
+      "precision": 0.5381,
+      "accuracy": 0.647
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "MLP",
+      "roc_auc": 0.7009,
+      "roc_auc_sd": 0.0497,
+      "balanced_accuracy": 0.6084,
+      "f1": 0.4131,
+      "recall": 0.3102,
+      "precision": 0.6771,
+      "accuracy": 0.6778
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Baseline (majority)",
+      "roc_auc": 0.5,
+      "roc_auc_sd": 0.0,
+      "balanced_accuracy": 0.5,
+      "f1": 0.6748,
+      "recall": 1.0,
+      "precision": 0.5092,
+      "accuracy": 0.5092
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Logistic Regression",
+      "roc_auc": 0.9842,
+      "roc_auc_sd": 0.0089,
+      "balanced_accuracy": 0.9316,
+      "f1": 0.9321,
+      "recall": 0.9225,
+      "precision": 0.9436,
+      "accuracy": 0.9314
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "LDA",
+      "roc_auc": 0.9823,
+      "roc_auc_sd": 0.0058,
+      "balanced_accuracy": 0.929,
+      "f1": 0.9292,
+      "recall": 0.9173,
+      "precision": 0.9429,
+      "accuracy": 0.9287
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Gaussian NB",
+      "roc_auc": 0.9579,
+      "roc_auc_sd": 0.0166,
+      "balanced_accuracy": 0.921,
+      "f1": 0.922,
+      "recall": 0.9174,
+      "precision": 0.9288,
+      "accuracy": 0.9208
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "KNN",
+      "roc_auc": 0.9693,
+      "roc_auc_sd": 0.0067,
+      "balanced_accuracy": 0.9106,
+      "f1": 0.91,
+      "recall": 0.8911,
+      "precision": 0.9305,
+      "accuracy": 0.9102
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "SVM (RBF)",
+      "roc_auc": 0.974,
+      "roc_auc_sd": 0.0121,
+      "balanced_accuracy": 0.9266,
+      "f1": 0.926,
+      "recall": 0.907,
+      "precision": 0.947,
+      "accuracy": 0.9261
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Decision Tree",
+      "roc_auc": 0.9205,
+      "roc_auc_sd": 0.0198,
+      "balanced_accuracy": 0.8997,
+      "f1": 0.9001,
+      "recall": 0.9016,
+      "precision": 0.901,
+      "accuracy": 0.8997
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Random Forest",
+      "roc_auc": 0.9814,
+      "roc_auc_sd": 0.0113,
+      "balanced_accuracy": 0.934,
+      "f1": 0.9354,
+      "recall": 0.9379,
+      "precision": 0.9341,
+      "accuracy": 0.934
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Extra Trees",
+      "roc_auc": 0.9857,
+      "roc_auc_sd": 0.0088,
+      "balanced_accuracy": 0.9445,
+      "f1": 0.9459,
+      "recall": 0.9483,
+      "precision": 0.9446,
+      "accuracy": 0.9445
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "AdaBoost",
+      "roc_auc": 0.9843,
+      "roc_auc_sd": 0.0097,
+      "balanced_accuracy": 0.9259,
+      "f1": 0.928,
+      "recall": 0.9327,
+      "precision": 0.9257,
+      "accuracy": 0.926
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Gradient Boosting",
+      "roc_auc": 0.9808,
+      "roc_auc_sd": 0.0125,
+      "balanced_accuracy": 0.9209,
+      "f1": 0.9211,
+      "recall": 0.9171,
+      "precision": 0.9273,
+      "accuracy": 0.9208
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "XGBoost",
+      "roc_auc": 0.9821,
+      "roc_auc_sd": 0.0119,
+      "balanced_accuracy": 0.9339,
+      "f1": 0.9351,
+      "recall": 0.9378,
+      "precision": 0.9344,
+      "accuracy": 0.934
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "LightGBM",
+      "roc_auc": 0.9794,
+      "roc_auc_sd": 0.0112,
+      "balanced_accuracy": 0.9365,
+      "f1": 0.9382,
+      "recall": 0.9429,
+      "precision": 0.9343,
+      "accuracy": 0.9366
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "MLP",
+      "roc_auc": 0.929,
+      "roc_auc_sd": 0.0361,
+      "balanced_accuracy": 0.8636,
+      "f1": 0.8572,
+      "recall": 0.8186,
+      "precision": 0.9026,
+      "accuracy": 0.8627
+    }
+  ],
+  "tuning": [
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Logistic Regression",
+      "default_auc": 0.7349,
+      "tuned_auc": 0.74,
+      "best_params": "{'C': np.float64(0.0746), 'l1_ratio': np.float64(0.9507), 'penalty': 'elasticnet'}",
+      "gain": 0.0051
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "SVM (RBF)",
+      "default_auc": 0.7207,
+      "tuned_auc": 0.7356,
+      "best_params": "{'C': np.float64(20.6514), 'gamma': np.float64(0.0027)}",
+      "gain": 0.015
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Random Forest",
+      "default_auc": 0.7142,
+      "tuned_auc": 0.7426,
+      "best_params": "{'max_depth': 3, 'max_features': 0.8, 'min_samples_leaf': 18, 'n_estimators': 587}",
+      "gain": 0.0284
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "XGBoost",
+      "default_auc": 0.701,
+      "tuned_auc": 0.7422,
+      "best_params": "{'colsample_bytree': np.float64(0.7426), 'learning_rate': np.float64(0.0305), 'max_depth': 3, 'min_child_weight': 6, 'n_estimators': 157, 'reg_lambda': np.float64(7.2449), 'scale_pos_weight': np.float64(1.0704), 'subsample': np.float64(0.6836)}",
+      "gain": 0.0412
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Logistic Regression",
+      "default_auc": 0.9842,
+      "tuned_auc": 0.9873,
+      "best_params": "{'C': np.float64(0.1907), 'l1_ratio': np.float64(0.7852), 'penalty': 'elasticnet'}",
+      "gain": 0.0031
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "SVM (RBF)",
+      "default_auc": 0.974,
+      "tuned_auc": 0.9845,
+      "best_params": "{'C': np.float64(5.4567), 'gamma': np.float64(0.0058)}",
+      "gain": 0.0105
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Random Forest",
+      "default_auc": 0.9814,
+      "tuned_auc": 0.9831,
+      "best_params": "{'max_depth': 5, 'max_features': 0.8, 'min_samples_leaf': 14, 'n_estimators': 441}",
+      "gain": 0.0017
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "XGBoost",
+      "default_auc": 0.9821,
+      "tuned_auc": 0.9832,
+      "best_params": "{'colsample_bytree': np.float64(0.5875), 'learning_rate': np.float64(0.1896), 'max_depth': 5, 'min_child_weight': 1, 'n_estimators': 101, 'reg_lambda': np.float64(9.829), 'scale_pos_weight': np.float64(1.9654), 'subsample': np.float64(0.8233)}",
+      "gain": 0.0011
+    }
+  ],
+  "leaderboard": [
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Random Forest",
+      "tuned_auc": 0.7426
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Soft Voting",
+      "tuned_auc": 0.7423
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "XGBoost",
+      "tuned_auc": 0.7422
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Logistic Regression",
+      "tuned_auc": 0.74
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "SVM (RBF)",
+      "tuned_auc": 0.7356
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "model": "Stacking",
+      "tuned_auc": 0.6701
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Logistic Regression",
+      "tuned_auc": 0.9873
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Soft Voting",
+      "tuned_auc": 0.9866
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Stacking",
+      "tuned_auc": 0.9864
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "SVM (RBF)",
+      "tuned_auc": 0.9845
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "XGBoost",
+      "tuned_auc": 0.9832
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "model": "Random Forest",
+      "tuned_auc": 0.9831
+    }
+  ],
+  "test": {
+    "A_demographic_cognitive": {
+      "model": "Random Forest",
+      "threshold": 0.496,
+      "n_test": 187,
+      "roc_auc": 0.7287,
+      "roc_auc_ci95": [
+        0.6543978391693784,
+        0.8001765254407618
+      ],
+      "pr_auc": 0.6572,
+      "accuracy": 0.6471,
+      "balanced_accuracy": 0.6455,
+      "f1": 0.5823,
+      "sensitivity": 0.6389,
+      "specificity": 0.6522,
+      "precision": 0.5349,
+      "npv": 0.7426,
+      "brier": 0.2088,
+      "confusion": [
+        [
+          75,
+          40
+        ],
+        [
+          26,
+          46
+        ]
+      ]
+    },
+    "B_with_symptom_ratings": {
+      "model": "Logistic Regression",
+      "threshold": 0.3944,
+      "n_test": 98,
+      "roc_auc": 0.955,
+      "roc_auc_ci95": [
+        0.9064897946332287,
+        0.9875100385899039
+      ],
+      "pr_auc": 0.948,
+      "accuracy": 0.8878,
+      "balanced_accuracy": 0.8867,
+      "f1": 0.8952,
+      "sensitivity": 0.94,
+      "specificity": 0.8333,
+      "precision": 0.8545,
+      "npv": 0.9302,
+      "brier": 0.0776,
+      "confusion": [
+        [
+          40,
+          8
+        ],
+        [
+          3,
+          47
+        ]
+      ]
+    }
+  },
+  "leave_one_site_out": [
+    {
+      "held_out_site": "Peking_1",
+      "n": 136,
+      "adhd_rate": 0.3529,
+      "roc_auc": 0.8596,
+      "accuracy": 0.8162,
+      "balanced_accuracy": 0.8011
+    },
+    {
+      "held_out_site": "NeuroIMAGE",
+      "n": 73,
+      "adhd_rate": 0.4932,
+      "roc_auc": 0.7853,
+      "accuracy": 0.5068,
+      "balanced_accuracy": 0.5
+    },
+    {
+      "held_out_site": "Pittsburgh",
+      "n": 98,
+      "adhd_rate": 0.0408,
+      "roc_auc": 0.7633,
+      "accuracy": 0.5816,
+      "balanced_accuracy": 0.6622
+    },
+    {
+      "held_out_site": "Peking_3",
+      "n": 42,
+      "adhd_rate": 0.4524,
+      "roc_auc": 0.7277,
+      "accuracy": 0.619,
+      "balanced_accuracy": 0.6384
+    },
+    {
+      "held_out_site": "Peking_2",
+      "n": 67,
+      "adhd_rate": 0.5224,
+      "roc_auc": 0.7036,
+      "accuracy": 0.6866,
+      "balanced_accuracy": 0.6879
+    },
+    {
+      "held_out_site": "OHSU",
+      "n": 113,
+      "adhd_rate": 0.3805,
+      "roc_auc": 0.6978,
+      "accuracy": 0.6814,
+      "balanced_accuracy": 0.6173
+    },
+    {
+      "held_out_site": "NYU",
+      "n": 263,
+      "adhd_rate": 0.5779,
+      "roc_auc": 0.6804,
+      "accuracy": 0.6236,
+      "balanced_accuracy": 0.616
+    },
+    {
+      "held_out_site": "KKI",
+      "n": 83,
+      "adhd_rate": 0.2651,
+      "roc_auc": 0.5648,
+      "accuracy": 0.5663,
+      "balanced_accuracy": 0.5741
+    },
+    {
+      "held_out_site": "WashU",
+      "n": 60,
+      "adhd_rate": 0.0,
+      "roc_auc": null,
+      "accuracy": 0.7833,
+      "balanced_accuracy": null
+    }
+  ],
+  "site_confound": {
+    "without_site": 0.7349,
+    "with_site": 0.8029,
+    "site_only": 0.7025
+  },
+  "subgroups": [
+    {
+      "set": "A_demographic_cognitive",
+      "group": "boys",
+      "n": 111,
+      "adhd_rate": 0.5045,
+      "roc_auc": 0.6554,
+      "sensitivity": 0.75,
+      "specificity": 0.3455
+    },
+    {
+      "set": "A_demographic_cognitive",
+      "group": "girls",
+      "n": 76,
+      "adhd_rate": 0.2105,
+      "roc_auc": 0.6615,
+      "sensitivity": 0.25,
+      "specificity": 0.9333
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "group": "boys",
+      "n": 58,
+      "adhd_rate": 0.6552,
+      "roc_auc": 0.9197,
+      "sensitivity": 0.9211,
+      "specificity": 0.75
+    },
+    {
+      "set": "B_with_symptom_ratings",
+      "group": "girls",
+      "n": 40,
+      "adhd_rate": 0.3,
+      "roc_auc": 0.9881,
+      "sensitivity": 1.0,
+      "specificity": 0.8929
+    }
+  ],
+  "subtype": {
+    "accuracy": 0.7347,
+    "macro_f1": 0.6895,
+    "n_test": 98
+  }
+}
