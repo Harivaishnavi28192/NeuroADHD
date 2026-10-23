@@ -3,6 +3,8 @@
 An end-to-end data science project that predicts an **ADHD diagnosis** from the public **ADHD-200** dataset. It covers data acquisition, cleaning, exploratory analysis, feature engineering, 13 machine-learning algorithms, hyper-parameter tuning, ensembles, explainability (SHAP), and a **resting-state fMRI connectivity** analysis.
 The results are presented in a full-width, responsive website.
 
+**Live website:** https://harivaishnavi28192.github.io/NeuroADHD/
+
 > **Disclaimer:** this is an educational and research project, **not** a diagnostic tool.
 
 ---
