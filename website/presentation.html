@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuroADHD: Project Presentation Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090a0f;
+      --card-bg: #12151f;
+      --border: #232938;
+      --cyan: #22d3ee;
+      --blue: #38bdf8;
+      --blue-dark: #2563eb;
+      --orange: #f97316;
+      --white: #ffffff;
+      --muted: #9ca3af;
+      --light: #e2e8f0;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+      --display: 'Space Grotesk', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: var(--bg); color: var(--white);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Deck Layout */
+    .deck-container {
+      position: relative; width: 100vw; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column; justify-content: space-between;
+      padding: clamp(30px, 4vw, 60px) clamp(40px, 6vw, 90px);
+      background: radial-gradient(circle at 85% 20%, rgba(37, 99, 235, 0.12), transparent 50%),
+                  radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.08), transparent 45%),
+                  var(--bg);
+      opacity: 0; transform: scale(0.98);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .slide.active {
+      display: flex; opacity: 1; transform: scale(1); z-index: 2;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-eyebrow {
+      font-size: clamp(0.85rem, 1.2vw, 1.15rem);
+      font-weight: 700; color: var(--cyan);
+      text-transform: uppercase; letter-spacing: 0.14em;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    }
+    .slide-eyebrow::before {
+      content: ""; width: 24px; height: 3px; background: var(--cyan); border-radius: 999px;
+    }
+    .slide-title {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 3.2vw, 3.6rem);
+      font-weight: 700; line-height: 1.12; letter-spacing: -0.03em;
+    }
+    .slide-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #fff 30%, var(--cyan) 80%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    /* Slide Body Layouts */
+    .slide-body {
+      flex: 1; display: flex; align-items: center; gap: clamp(24px, 3.5vw, 56px);
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 36px; width: 100%; height: 100%;
+      align-items: center;
+    }
+
+    .grid-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;
+    }
+
+    .grid-cards-2 {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; width: 100%;
+    }
+
+    /* Content Cards */
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: clamp(22px, 2.2vw, 36px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .card-title {
+      font-family: var(--display); font-size: clamp(1.3rem, 1.6vw, 1.9rem);
+      font-weight: 700; color: var(--cyan); margin-bottom: 12px;
+    }
+    .card-text {
+      font-size: clamp(1.05rem, 1.25vw, 1.35rem); line-height: 1.6;
+      color: var(--light);
+    }
+
+    .stat-card {
+      text-align: center; padding: clamp(24px, 2.5vw, 40px);
+    }
+    .stat-num {
+      font-family: var(--display); font-size: clamp(3.2rem, 4.5vw, 5.5rem);
+      font-weight: 700; line-height: 1; margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: clamp(1.15rem, 1.4vw, 1.6rem); font-weight: 700; color: var(--white);
+      margin-bottom: 6px;
+    }
+    .stat-desc {
+      font-size: clamp(0.9rem, 1.05vw, 1.2rem); color: var(--muted);
+    }
+
+    /* Big Bullet Lists */
+    .big-bullets {
+      list-style: none; display: flex; flex-direction: column; gap: clamp(14px, 1.6vw, 24px);
+    }
+    .big-bullets li {
+      font-size: clamp(1.1rem, 1.35vw, 1.5rem); line-height: 1.55; color: var(--light);
+      position: relative; padding-left: 1.8em;
+    }
+    .big-bullets li::before {
+      content: "✦"; position: absolute; left: 0; top: 0;
+      color: var(--cyan); font-size: 1.1em;
+    }
+    .big-bullets strong { color: var(--white); }
+
+    /* Media Frames */
+    .media-frame {
+      width: 100%; height: 100%; max-height: 62vh;
+      border-radius: 18px; overflow: hidden; border: 1px solid var(--border);
+      background: #fafaf9; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .media-frame img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+    }
+
+    /* Title Slide Specific */
+    .hero-slide {
+      justify-content: center; gap: 28px;
+    }
+    .badge-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 20px; border-radius: 999px;
+      background: rgba(34, 211, 238, 0.12); border: 1px solid var(--cyan);
+      color: var(--cyan); font-weight: 700; font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+      letter-spacing: 0.08em; text-transform: uppercase; align-self: flex-start;
+    }
+    .hero-h1 {
+      font-family: var(--display); font-size: clamp(3.5rem, 6vw, 6.2rem);
+      font-weight: 700; line-height: 1.02; letter-spacing: -0.04em;
+    }
+    .hero-h2 {
+      font-size: clamp(1.4rem, 2.2vw, 2.2rem); color: var(--blue);
+      font-weight: 600; line-height: 1.3;
+    }
+    .hero-meta {
+      font-size: clamp(1.1rem, 1.4vw, 1.5rem); color: var(--muted);
+      border-left: 3px solid var(--cyan); padding-left: 16px; margin-top: 10px;
+    }
+
+    /* Controls Bar */
+    .deck-controls {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 100; display: flex; align-items: center; gap: 14px;
+      background: rgba(18, 21, 31, 0.85); backdrop-filter: blur(14px);
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 8px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .ctrl-btn {
+      background: none; border: 0; color: var(--white);
+      font-size: 1.3rem; cursor: pointer; padding: 4px 10px; border-radius: 8px;
+      transition: all 0.2s; display: grid; place-items: center;
+    }
+    .ctrl-btn:hover { background: rgba(255, 255, 255, 0.15); color: var(--cyan); }
+    .deck-counter {
+      font-family: var(--display); font-size: 1rem; font-weight: 700;
+      color: var(--cyan); min-width: 60px; text-align: center;
+    }
+
+    .top-actions {
+      position: fixed; top: 20px; right: 28px; z-index: 100;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .action-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 999px; font-size: 0.88rem; font-weight: 700;
+      color: #fff; background: var(--card-bg); border: 1px solid var(--border);
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+    }
+    .action-btn:hover {
+      background: var(--blue-dark); border-color: var(--blue); transform: translateY(-2px);
+    }
+    .action-btn--primary {
+      background: var(--blue-dark); border-color: var(--blue);
+    }
+    .action-btn--primary:hover {
+      background: var(--cyan); color: #000;
+    }
+
+    /* Progress Line */
+    .deck-progress {
+      position: fixed; top: 0; left: 0; height: 4px;
+      background: linear-gradient(90deg, var(--blue-dark), var(--cyan));
+      width: 0; z-index: 150; transition: width 0.3s ease;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-2 { grid-template-columns: 1fr; gap: 20px; }
+      .grid-cards { grid-template-columns: repeat(2, 1fr); }
+      .media-frame { max-height: 40vh; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck-progress" id="deckProgress"></div>
+
+<div class="top-actions">
+  <a class="action-btn" href="index.html">← Back to Website</a>
+  <a class="action-btn action-btn--primary" href="NeuroADHD_Presentation.pptx" download title="Download PowerPoint File">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Download .PPTX
+  </a>
+  <button class="action-btn" id="fsBtn" title="Toggle Fullscreen">⛶ Fullscreen</button>
+</div>
+
+<div class="deck-container">
+
+  <!-- SLIDE 1: Title -->
+  <section class="slide hero-slide active" data-index="1">
+    <div class="badge-tag">ADHD-200 Benchmark · Machine Learning & Connectomics</div>
+    <h1 class="hero-h1">NEUROADHD</h1>
+    <h2 class="hero-h2">Predictive Modeling & Connectomic Analysis of Attention Deficit Hyperactivity Disorder</h2>
+    <div class="hero-meta">
+      <strong>Presented by: Harivaishnavi</strong><br>
+      Karunya Institute of Technology and Sciences · B.Tech Technical Project
+    </div>
+  </section>
+
+  <!-- SLIDE 2: Key Milestones -->
+  <section class="slide" data-index="2">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Executive Summary</div>
+      <h2 class="slide-title">Key Project Milestones at a <em>Glance</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-cards">
+        <div class="card stat-card">
+          <div class="stat-num" style="color: var(--white);">935</div>
+          <div class="stat-label">Children in Cohort</div>
+          <div class="stat-desc">Harmonized across 9 international clinics</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-num" style="color: var(--cyan);">13</div>
+          <div class="stat-label">ML Architectures</div>
+          <div class="stat-desc">Tree, linear, SVM & stacking ensembles</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-num" style="color: var(--blue);">0.73</div>
+          <div class="stat-label">Set A ROC-AUC</div>
+          <div class="stat-desc">Demographics + Cognitive IQ only (No survey)</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-num" style="color: var(--orange);">0.96</div>
+          <div class="stat-label">Set B ROC-AUC</div>
+          <div class="stat-desc">Augmented with parent symptom ratings</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-num" style="color: var(--cyan);">40</div>
+          <div class="stat-label">fMRI Scans Analysed</div>
+          <div class="stat-desc">Resting-state BOLD timeseries via Nilearn</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-num" style="color: var(--muted);">p=0.11</div>
+          <div class="stat-label">Permutation Test</div>
+          <div class="stat-desc">Connectome classifiers not above chance</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: Problem Statement -->
+  <section class="slide" data-index="3">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Clinical Background</div>
+      <h2 class="slide-title">Why ADHD Diagnosis Needs <em>Machine Learning</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-cards-2">
+        <div class="card">
+          <div class="card-title">01 · High Global Burden</div>
+          <p class="card-text">ADHD impacts 5% to 7% of children worldwide, impairing executive function, academic attainment, and emotional regulation.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">02 · Subjective & Delayed</div>
+          <p class="card-text">Standard assessments rely on parent/teacher interviews and clinician variance. Waitlists exceed 12–18 months in community healthcare.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">03 · Masking & Gender Gap</div>
+          <p class="card-text">High-IQ children and females frequently mask overt hyperactivity, exhibiting subtle inattention and suffering from delayed diagnosis.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">04 · Consortium Site Bias</div>
+          <p class="card-text">Multicenter cohorts exhibit massive clinic prevalence shifts (0% to 58%), causing naive AI models to memorize hospital names instead of pathology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: Personal Contributions -->
+  <section class="slide" data-index="4">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Project Scope</div>
+      <h2 class="slide-title">What Exactly I Built & <em>Delivered</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-cards">
+        <div class="card">
+          <div class="card-title">Data Ingestion</div>
+          <p class="card-text">Harmonized 10 clinical centers, pruned 101 duplicate records, normalized Conners & ADHD-RS to [0,1], and fixed sentinel NaNs.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Statistical Rigor</div>
+          <p class="card-text">Evaluated Cohen's d effect sizes, Welch's t-tests, Mann-Whitney U, and VIFs across demographic and cognitive markers.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">13-Model Zoo</div>
+          <p class="card-text">Trained and tuned 13 ML models via 5-fold CV, randomized search, voting/stacking ensembles, and Youden thresholding.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Fairness & Bias</div>
+          <p class="card-text">Conducted Leave-One-Site-Out (LOSO) checks, audited 0.70 site confounder, and uncovered ethical gender sensitivity disparity.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">SHAP Attribution</div>
+          <p class="card-text">Decomposed black-box decisions with SHAP beeswarm/force plots, uncovering and fixing the NYU handedness artifact.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Connectomics & App</div>
+          <p class="card-text">Extracted fMRI connectomes with Nilearn (MSDL & BASC) and built an interactive 3D WebGL web app with live in-browser inference.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: Phase 1 Data Cleaning -->
+  <section class="slide" data-index="5">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 1 · ETL Pipeline</div>
+      <h2 class="slide-title">Multi-Center Clinical Data <em>Harmonization</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>Ingested 10 Clinics:</strong> Downloaded raw TSVs directly from the public ADHD-200 S3 repository.</li>
+            <li><strong>Excised 101 Duplicates:</strong> Filtered repeated rows to ensure zero data leakage across splits.</li>
+            <li><strong>Normalized Questionnaires:</strong> Unified Conners' T-scores (40–100) and ADHD-RS IV (18–72) onto a continuous [0, 1] severity scale.</li>
+            <li><strong>Harmonized Handedness:</strong> Converted disparate categorical & continuous scales into a unified dominant hand indicator.</li>
+            <li><strong>Quarantined Brown Site:</strong> Isolated unlabelled cohort (n=26) for zero-shot testing.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/01_raw_column_coverage.png" alt="Column coverage matrix">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: Phase 2 EDA -->
+  <section class="slide" data-index="6">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 2 · Exploratory Analysis</div>
+      <h2 class="slide-title">Statistical Findings & <em>Cohen's d Effect Sizes</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>Sex Disparity:</strong> Boys diagnosed at more than double the rate of girls (49% vs 22%).</li>
+            <li><strong>Cognitive Shifts:</strong> Verbal IQ (d = -0.47), Performance IQ (d = -0.55), and Full IQ (d = -0.56) show modest drops but heavy overlap.</li>
+            <li><strong>Symptom Dominance:</strong> Parent rating questionnaires exhibit massive clinical separation (Cohen's d = 2.87, p &lt; 1e-100!).</li>
+            <li><strong>Site Asymmetry:</strong> ADHD rates vary between 0% (WashU) and 58% (NYU), acting as a primary statistical confounder.</li>
+            <li><strong>PCA & t-SNE:</strong> Proved no distinct biological clusters exist without symptom ratings.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/02_effect_sizes.png" alt="Cohen's d effect sizes">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: Phase 3 Preprocessing -->
+  <section class="slide" data-index="7">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 3 · Feature Engineering</div>
+      <h2 class="slide-title">Evidence-Based Preprocessing & <em>Imbalance Mitigation</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>Stratified 80/20 Split:</strong> Locked 20% holdout test set (n=187 for Set A; n=98 for Set B) untouched until final evaluation.</li>
+            <li><strong>Imputation Benchmark:</strong> Mean, Median, KNN, and Iterative imputation gave identical AUCs; median was selected for operational simplicity.</li>
+            <li><strong>Class Imbalance Mitigation:</strong> Class-weighted loss raised minority catch rate (sensitivity) from 49% to 67%.</li>
+            <li><strong>Non-Linear Features:</strong> Engineered Verbal-Performance IQ Discrepancy and quadratic Age curve (Age - 12)^2.</li>
+            <li><strong>Consensus Feature Selection:</strong> RFECV and L1 Lasso confirmed parent symptom ratings outrank all other features.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/03_imbalance_comparison.png" alt="Class imbalance handling benchmark">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: Phase 4 Model Zoo -->
+  <section class="slide" data-index="8">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 4 · Model Zoo</div>
+      <h2 class="slide-title">Benchmarking 13 Machine Learning <em>Architectures</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>13 Architectures Evaluated:</strong> Logistic Regression, LDA, Gaussian NB, KNN, Random Forest, Extra Trees, GBDT, XGBoost, LightGBM, AdaBoost, RBF SVM, Voting, and Stacking.</li>
+            <li><strong>Rigorous 5-Fold Cross Validation:</strong> Evaluated all models under identical folds with full pipeline containment.</li>
+            <li><strong>Hyperparameter Tuning:</strong> Conducted RandomizedSearchCV across model parameter distributions.</li>
+            <li><strong>Youden Thresholding:</strong> Calibrated decision cutoffs to balance sensitivity and specificity under class imbalance.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/04_model_comparison_cv.png" alt="Model comparison boxplot">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: Phase 5 Test Set Results -->
+  <section class="slide" data-index="9">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 5 · Test Set Generalization</div>
+      <h2 class="slide-title">Locked Holdout Test Results <em>(1,000 Bootstraps)</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-cards-2">
+        <div class="card" style="border-color: var(--blue); border-width: 2px;">
+          <div style="color: var(--blue); font-weight: 700; font-size: 1.2rem; margin-bottom: 4px;">SET A: Demographics & IQ Only</div>
+          <div style="color: var(--muted); font-size: 1rem; margin-bottom: 12px;">Random Forest (Tuned) · n = 187</div>
+          <div class="stat-num" style="color: var(--white); font-size: 4rem;">0.730</div>
+          <div style="color: var(--cyan); font-weight: 700; margin-bottom: 16px;">Test ROC-AUC (95% CI: 0.655 – 0.800)</div>
+          <ul class="big-bullets" style="gap: 10px;">
+            <li style="font-size: 1.15rem;">Accuracy: <strong>64.7%</strong> | Bal. Acc: <strong>64.6%</strong></li>
+            <li style="font-size: 1.15rem;">Sensitivity (Catch Rate): <strong>63.9%</strong></li>
+            <li style="font-size: 1.15rem;">Specificity (Clear Rate): <strong>65.2%</strong></li>
+            <li style="font-size: 1.15rem;"><strong>Takeaway:</strong> Demographic markers establish an upper bound of ~0.73 AUC.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="border-color: var(--orange); border-width: 2px;">
+          <div style="color: var(--orange); font-weight: 700; font-size: 1.2rem; margin-bottom: 4px;">SET B: With Parent Symptom Ratings</div>
+          <div style="color: var(--muted); font-size: 1rem; margin-bottom: 12px;">Logistic Regression (Tuned) · n = 98</div>
+          <div class="stat-num" style="color: var(--white); font-size: 4rem;">0.955</div>
+          <div style="color: var(--orange); font-weight: 700; margin-bottom: 16px;">Test ROC-AUC (95% CI: 0.906 – 0.988)</div>
+          <ul class="big-bullets" style="gap: 10px;">
+            <li style="font-size: 1.15rem;">Accuracy: <strong>88.8%</strong> | Bal. Acc: <strong>88.7%</strong></li>
+            <li style="font-size: 1.15rem;">Sensitivity (Catch Rate): <strong>94.0%</strong></li>
+            <li style="font-size: 1.15rem;">Specificity (Clear Rate): <strong>83.3%</strong></li>
+            <li style="font-size: 1.15rem;"><strong>Takeaway:</strong> Behavioral ratings determine diagnosis (automated screening).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: Phase 6 Gender Fairness -->
+  <section class="slide" data-index="10">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 6 · Algorithmic Fairness</div>
+      <h2 class="slide-title">Uncovering Severe Gender Disparity in <em>Set A</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>Severe Catch-Rate Gap:</strong> In Set A (demographics only), sensitivity for boys was <strong>75.0%</strong>, but collapsed to <strong>25.0%</strong> for girls!</li>
+            <li><strong>Why?</strong> The model learned that "male" is a major clue, codifying historical referral bias.</li>
+            <li><strong>Clinical Danger:</strong> Girls with high IQ or inattentive profiles were systematically misclassified as neurotypical.</li>
+            <li><strong>Resolution in Set B:</strong> Incorporating parent questionnaires restored female sensitivity to <strong>100.0%</strong>!</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/04_confusion_matrices.png" alt="Confusion matrices by group">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: Phase 7 Site Confounders -->
+  <section class="slide" data-index="11">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 7 · Confounder Auditing</div>
+      <h2 class="slide-title">Clinic Confounder Discovery & <em>LOSO Validation</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>The Clinic Shortcut:</strong> A model provided ONLY the clinic ID reaches <strong>0.7025 AUC</strong> without looking at the patient!</li>
+            <li><strong>Strict Exclusion:</strong> Clinic ID was excluded from production features to ensure genuine generalization.</li>
+            <li><strong>Leave-One-Site-Out (LOSO):</strong> Iteratively trained on N-1 clinics and tested on the remaining clinic.</li>
+            <li><strong>Performance Swings:</strong> Scores range from 0.56 AUC (KKI) to 0.86 AUC (Peking), proving multi-site re-calibration is mandatory.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/04_leave_one_site_out.png" alt="LOSO results across clinics">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: Phase 8 SHAP Explainability -->
+  <section class="slide" data-index="12">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 8 · Explainable AI</div>
+      <h2 class="slide-title">SHAP Feature Attribution & <em>The NYU Handedness Bug</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>The Handedness Mystery:</strong> Handedness originally ranked 2nd in importance for Set A. Left-handedness pushed strongly toward ADHD.</li>
+            <li><strong>Investigating Raw Data:</strong> NYU (58% ADHD rate) coded handedness as continuous Edinburgh scores, while other clinics coded binary flags!</li>
+            <li><strong>The Fix:</strong> Re-harmonized all clinics to true dominant hand -> Handedness attribution collapsed to zero!</li>
+            <li><strong>Takeaway:</strong> Proved that explainable AI (SHAP) is essential to detect hidden data collection artifacts.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/05_shap_beeswarm_SetA.png" alt="SHAP Beeswarm summary Set A">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 13: Phase 9 fMRI Connectomics -->
+  <section class="slide" data-index="13">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 9 · Neuroimaging Analysis</div>
+      <h2 class="slide-title">Resting-State fMRI Connectomes <em>via Nilearn</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-2">
+        <div class="card">
+          <ul class="big-bullets">
+            <li><strong>Connectome Pipeline (n = 40):</strong> MSDL (39 regions) and BASC-64 atlases; Correlation, Partial Correlation, and Tangent Space.</li>
+            <li><strong>42 Configurations Tested:</strong> Top model: PCA + RBF SVM on MSDL correlation matrix (Accuracy: 56.2%, ROC-AUC: 0.63).</li>
+            <li><strong>500-Iteration Permutation Test:</strong> Observed score yields p = 0.11 (Null mean = 51.2%).</li>
+            <li><strong>Scientific Verdict:</strong> In n=40 samples, rs-fMRI connectomes do NOT significantly outperform random guessing. Larger cohorts (n&gt;2,000) are needed.</li>
+          </ul>
+        </div>
+        <div class="media-frame">
+          <img src="assets/img/06_connectome.png" alt="Brain connectome network plot">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 14: Phase 10 Web Deployment -->
+  <section class="slide" data-index="14">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Phase 10 · Production Deployment</div>
+      <h2 class="slide-title">Interactive 3D Web App & <em>Live In-Browser Inference</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-cards">
+        <div class="card">
+          <div class="card-title">3D Brain Connectome</div>
+          <p class="card-text">Three.js WebGL canvas rendering 48 anatomical nodes with traveling synaptic BOLD pulses responsive to cursor movement.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Interactive Model Zoo</div>
+          <p class="card-text">Chart.js multi-metric benchmark explorer: toggle ROC-AUC, Balanced Accuracy, F1-Score, Sensitivity, and Precision.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Live In-Browser Predictor</div>
+          <p class="card-text">Executes real-time logistic regression inference in the browser with 5 clinical presets (Control, Combined, Inattentive, High-IQ, Reset).</p>
+        </div>
+        <div class="card">
+          <div class="card-title">SHAP Waterfall Bars</div>
+          <p class="card-text">Dynamic log-odds attribution chart showing exact positive (ADHD) and negative (TD) contributions with sign tags.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Zero Backend Required</div>
+          <p class="card-text">Pure static bundle deployed on GitHub Pages with zero server dependencies and instant global availability.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Full Reproducibility</div>
+          <p class="card-text">Features interactive HTML exports for all 6 notebooks, .ipynb downloads, and copyable repository structure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 15: Conclusion -->
+  <section class="slide" data-index="15">
+    <header class="slide-header">
+      <div class="slide-eyebrow">Conclusion & Impact</div>
+      <h2 class="slide-title">Key Scientific Takeaways & <em>Future Directions</em></h2>
+    </header>
+    <div class="slide-body">
+      <div class="grid-cards-2">
+        <div class="card">
+          <div class="card-title">What My Project Proved</div>
+          <ul class="big-bullets" style="gap: 12px; margin-top: 10px;">
+            <li style="font-size: 1.15rem;">Demographics + IQ establish an upper bound of ~0.73 AUC.</li>
+            <li style="font-size: 1.15rem;">Parent surveys dominate diagnosis (~0.96 AUC, 94% sensitivity).</li>
+            <li style="font-size: 1.15rem;">Demographic AI discriminates against females (25% catch rate).</li>
+            <li style="font-size: 1.15rem;">SHAP explainability is mandatory to catch multi-site data artifacts.</li>
+            <li style="font-size: 1.15rem;">Small-sample fMRI connectomes are limited by sample size.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Future Enhancements</div>
+          <ul class="big-bullets" style="gap: 12px; margin-top: 10px;">
+            <li style="font-size: 1.15rem;">Scale neuroimaging to the ABCD Study (n > 11,800).</li>
+            <li style="font-size: 1.15rem;">Model teacher-parent rating discordance as an informative feature.</li>
+            <li style="font-size: 1.15rem;">Incorporate Polygenic Risk Scores (PRS) for gene-cognition fusion.</li>
+            <li style="font-size: 1.15rem;">Package into HL7 FHIR-compliant Electronic Health Record (EHR) clinical decision support modules.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 16: Q&A / Thank You -->
+  <section class="slide hero-slide" data-index="16" style="text-align: center; align-items: center;">
+    <h1 class="hero-h1" style="font-size: 5rem;">THANK YOU</h1>
+    <h2 class="hero-h2" style="font-size: 2.2rem; color: var(--cyan);">Questions & Discussion</h2>
+    <div class="card" style="max-width: 800px; padding: 30px; margin-top: 20px;">
+      <p style="font-size: 1.25rem; line-height: 1.8; color: var(--light);">
+        🌐 <strong>Live Website:</strong> <a href="https://harivaishnavi28192.github.io/NeuroADHD/" target="_blank" style="color: var(--blue);">harivaishnavi28192.github.io/NeuroADHD</a><br>
+        💻 <strong>GitHub Code:</strong> <a href="https://github.com/Harivaishnavi28192/NeuroADHD" target="_blank" style="color: var(--cyan);">github.com/Harivaishnavi28192/NeuroADHD</a><br>
+        👤 <strong>Presenter:</strong> Harivaishnavi | Karunya Institute of Technology and Sciences
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Deck Navigation Controls -->
+<div class="deck-controls">
+  <button class="ctrl-btn" id="prevBtn" title="Previous Slide (Left Arrow)">◀</button>
+  <span class="deck-counter" id="deckCounter">1 / 16</span>
+  <button class="ctrl-btn" id="nextBtn" title="Next Slide (Right Arrow or Space)">▶</button>
+</div>
+
+<script>
+  (function () {
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const counter = document.getElementById('deckCounter');
+    const progress = document.getElementById('deckProgress');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const fsBtn = document.getElementById('fsBtn');
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
+      if (progress) progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+    }
+
+    function next() { showSlide(current + 1); }
+    function prev() { showSlide(current - 1); }
+
+    if (nextBtn) nextBtn.addEventListener('click', next);
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault(); next();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault(); prev();
+      } else if (e.key === 'Home') {
+        e.preventDefault(); showSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault(); showSlide(slides.length - 1);
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+    if (fsBtn) fsBtn.addEventListener('click', toggleFullscreen);
+
+    showSlide(0);
+  })();
+</script>
+</body>
+</html>
