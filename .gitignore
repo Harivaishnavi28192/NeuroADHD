@@ -18,3 +18,10 @@ data/processed/fmri_timeseries_*.npz
 Thumbs.db
 desktop.ini
 .vscode/
+
+# Academic reports and documents
+*.docx
+*SBL*
+*Report*
+~$*
+
