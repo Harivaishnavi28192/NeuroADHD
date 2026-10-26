@@ -237,17 +237,19 @@
 
       <div class="card pad">
         <h3>Preprocessing Protocol</h3>
-        <table class="table">
-          <tbody>
-            <tr><th>Missing Codes</th><td>Mapped sentinel codes (<code>-999</code>, <code>N/A</code>) to NaN</td></tr>
-            <tr><th>Duplicate Scrub</th><td>Identified and excised 101 repeated participants</td></tr>
-            <tr><th>Target Binarisation</th><td>Typically developing (0) vs ADHD Any Subtype (1)</td></tr>
-            <tr><th>Handedness Standard</th><td>Harmonised disparate site encodings into dominant hand</td></tr>
-            <tr><th>Questionnaire Unification</th><td>Mapped Conners' T-scores and ADHD-RS to 0–1 continuous severity</td></tr>
-            <tr><th>Cognitive Scaling</th><td>Full 4-subtest IQ prioritised, fallback to 2-subtest WISC</td></tr>
-            <tr><th>Unlabelled Holdout</th><td>Brown site (n=26) quarantined for zero-shot testing</td></tr>
-          </tbody>
-        </table>
+        <div class="table-scroll">
+          <table class="table">
+            <tbody>
+              <tr><th>Missing Codes</th><td>Mapped sentinel codes (<code>-999</code>, <code>N/A</code>) to NaN</td></tr>
+              <tr><th>Duplicate Scrub</th><td>Identified and excised 101 repeated participants</td></tr>
+              <tr><th>Target Binarisation</th><td>Typically developing (0) vs ADHD Any Subtype (1)</td></tr>
+              <tr><th>Handedness Standard</th><td>Harmonised disparate site encodings into dominant hand</td></tr>
+              <tr><th>Questionnaire Unification</th><td>Mapped Conners' T-scores and ADHD-RS to 0–1 continuous severity</td></tr>
+              <tr><th>Cognitive Scaling</th><td>Full 4-subtest IQ prioritised, fallback to 2-subtest WISC</td></tr>
+              <tr><th>Unlabelled Holdout</th><td>Brown site (n=26) quarantined for zero-shot testing</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
