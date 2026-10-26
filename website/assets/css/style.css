@@ -173,8 +173,8 @@ em {
 }
 
 ::selection {
-  background: var(--cyan);
-  color: #000;
+  background: rgba(37, 99, 235, 0.45);
+  color: #fff;
 }
 
 .wrap {
@@ -762,9 +762,11 @@ em {
 }
 
 .hero__title em {
-  background: linear-gradient(135deg, #fff 20%, var(--cyan-glow) 70%, var(--blue-2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: #fff;
+  font-style: normal;
 }
 
 .hero__lead {
