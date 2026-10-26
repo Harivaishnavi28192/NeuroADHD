@@ -557,8 +557,8 @@
       camera.updateProjectionMatrix();
 
       const wide = w / h > 1.15;
-      // Position connectome in right hemisphere of hero view
-      group.position.set(wide ? Math.min(2.2, 1.15 * camera.aspect) : 0.25, wide ? 0.2 : 0.65, 0);
+      // Position connectome in right hemisphere of hero view, vertically aligned with title
+      group.position.set(wide ? Math.min(2.2, 1.15 * camera.aspect) : 0.25, wide ? 0.36 : 0.72, 0);
       group.scale.setScalar(wide ? 1.05 : 0.82);
     }
     resize();

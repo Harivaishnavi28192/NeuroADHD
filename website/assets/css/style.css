@@ -692,7 +692,7 @@ em {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: calc(var(--nav-h) + clamp(20px, 4vh, 48px)) 0 clamp(20px, 3vh, 36px);
+  padding: calc(var(--nav-h) + clamp(10px, 1.8vh, 22px)) 0 clamp(16px, 2.5vh, 28px);
 }
 
 .hero__canvas {
@@ -723,11 +723,18 @@ em {
 .hero__inner {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: clamp(12px, 2.2vh, 32px);
 }
 
 .hero__text {
   max-width: min(920px, 68vw);
+}
+
+.hero__title {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 0.35em;
 }
 
 /* Badge Pill */
