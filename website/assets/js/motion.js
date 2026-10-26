@@ -64,9 +64,9 @@
   }
 
   /* =========================================================
-     2. Initialize 3D Neural Sphere Blob (Three.js)
+     2. Initialize 3D Neural Connectome (Three.js)
      ========================================================= */
-  initBlob();
+  initConnectome();
 
   if (!MOTION) {
     root.classList.remove("motion");
@@ -332,11 +332,14 @@
   }
 
   /* ======================================================================
-     10. WebGL 3D Brain Blob (Three.js r128): noise-displaced sphere + wireframe + neuron particles
+     10. 3D Neural Connectome (Three.js r128)
+     Interactive biological connectome network with anatomical hubs,
+     axonal tracts, synaptic signal impulses, and targeting indicator
      ====================================================================== */
-  function initBlob() {
+  function initConnectome() {
     const canvas = $(".hero__canvas");
     if (!canvas || !window.THREE) return;
+
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({
@@ -351,143 +354,279 @@
     if (!renderer.getContext()) return;
     root.classList.add("has-webgl");
 
-    const small = window.innerWidth < 760;
+    const small = window.innerWidth < 768;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
-    camera.position.z = 6;
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.z = 6.8;
 
-    const noise = `
-      vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
-      vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}
-      vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
-      vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-      float snoise(vec3 v){
-        const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);
-        vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
-        vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
-        vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;
-        i=mod289(i);
-        vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));
-        float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;
-        vec4 j=p-49.0*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);
-        vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);
-        vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);
-        vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));
-        vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
-        vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
-        vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
-        p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
-        vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;
-        return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
-      }`;
-    const uniforms = {
-      uTime: { value: 0 },
-      uAmp: { value: 0.32 },
-      uFreq: { value: 1.25 },
-      uMouse: { value: new THREE.Vector2() },
-      uColA: { value: new THREE.Color("#0a1526") },
-      uColB: { value: new THREE.Color("#2563eb") },
-      uColC: { value: new THREE.Color("#38bdf8") },
-    };
-    const vertex = noise + `
-      uniform float uTime; uniform float uAmp; uniform float uFreq; uniform vec2 uMouse;
-      varying float vDist; varying vec3 vNormal; varying vec3 vView;
-      void main(){
-        float n = snoise(normal*uFreq + vec3(uTime*0.22, uTime*0.17, uTime*0.11) + vec3(uMouse, 0.0)*0.5);
-        float n2 = snoise(normal*uFreq*2.4 - uTime*0.14) * 0.35;
-        float d = (n + n2) * uAmp;
-        vDist = d;
-        vec3 p = position + normal * d;
-        vec4 mv = modelViewMatrix * vec4(p, 1.0);
-        vView = -mv.xyz;
-        vNormal = normalize(normalMatrix * normal);
-        gl_Position = projectionMatrix * mv;
-      }`;
-    const fragment = `
-      uniform vec3 uColA; uniform vec3 uColB; uniform vec3 uColC;
-      varying float vDist; varying vec3 vNormal; varying vec3 vView;
-      void main(){
-        float fres = pow(1.0 - max(dot(normalize(vNormal), normalize(vView)), 0.0), 2.2);
-        vec3 col = mix(uColA, uColB, smoothstep(-0.3, 0.35, vDist));
-        col = mix(col, uColC, fres * 0.85);
-        gl_FragColor = vec4(col, 1.0);
-      }`;
-    const wireFragment = `varying float vDist; void main(){ gl_FragColor = vec4(0.22, 0.83, 0.93, 0.09 + smoothstep(0.0, 0.4, vDist) * 0.14); }`;
-
-    const geo = new THREE.IcosahedronGeometry(1.45, small ? 24 : 44);
-    const blob = new THREE.Mesh(geo, new THREE.ShaderMaterial({ uniforms, vertexShader: vertex, fragmentShader: fragment }));
-    const wire = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.452, small ? 10 : 18),
-      new THREE.ShaderMaterial({ uniforms, vertexShader: vertex, fragmentShader: wireFragment, wireframe: true, transparent: true, depthWrite: false })
-    );
     const group = new THREE.Group();
-    group.add(blob);
-    group.add(wire);
-
-    // "neurons": a halo of particles
-    const N = small ? 500 : 1100, pos = new Float32Array(N * 3);
-    for (let i = 0; i < N; i++) {
-      const r = 2.1 + Math.random() * 1.4, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
-      pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
-      pos[i * 3 + 1] = r * Math.sin(ph) * Math.sin(th);
-      pos[i * 3 + 2] = r * Math.cos(ph);
-    }
-    const pgeo = new THREE.BufferGeometry();
-    pgeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    const points = new THREE.Points(
-      pgeo,
-      new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.024, transparent: true, opacity: 0.65, depthWrite: false })
-    );
-    group.add(points);
     scene.add(group);
 
+    // Anatomical Brain Connectome Nodes with custom sizes & colors
+    const nodeDefs = [
+      // Prefrontal Cortex (Anterior Hubs)
+      { pos: [0.65, 0.85, 1.3], size: 0.18, type: "adhd" },
+      { pos: [-0.65, 0.85, 1.3], size: 0.15, type: "teal" },
+      { pos: [1.2, 0.5, 1.0], size: 0.13, type: "blue" },
+      { pos: [-1.2, 0.5, 1.0], size: 0.16, type: "teal" },
+      { pos: [0.35, 1.3, 0.7], size: 0.22, type: "adhd" }, // Large anterior hub
+      { pos: [-0.35, 1.3, 0.7], size: 0.14, type: "blue" },
+      { pos: [0.95, 1.05, 0.35], size: 0.12, type: "teal" },
+      { pos: [-0.95, 1.05, 0.35], size: 0.15, type: "blue", hasRing: true }, // Targeted active hub with ring!
+
+      // Motor & Somatosensory (Dorsal Strip)
+      { pos: [1.45, 0.75, -0.2], size: 0.19, type: "teal" },
+      { pos: [-1.45, 0.75, -0.2], size: 0.13, type: "adhd" },
+      { pos: [0.65, 1.45, -0.4], size: 0.16, type: "blue" },
+      { pos: [-0.65, 1.45, -0.4], size: 0.12, type: "teal" },
+      { pos: [1.25, 1.15, -0.85], size: 0.24, type: "adhd" }, // Large prominent orange hub (top-right)
+      { pos: [-1.25, 1.15, -0.85], size: 0.15, type: "blue" },
+
+      // Temporal Lobes (Lateral Inferior)
+      { pos: [1.8, -0.2, 0.25], size: 0.17, type: "teal" },
+      { pos: [-1.8, -0.2, 0.25], size: 0.21, type: "blue" }, // Large lateral blue hub
+      { pos: [1.65, -0.55, -0.65], size: 0.12, type: "teal" },
+      { pos: [-1.65, -0.55, -0.65], size: 0.14, type: "adhd" },
+      { pos: [1.45, -0.15, 0.85], size: 0.16, type: "blue" },
+      { pos: [-1.45, -0.15, 0.85], size: 0.13, type: "teal" },
+
+      // Parietal & Occipital (Posterior Visual)
+      { pos: [0.55, 0.25, -1.65], size: 0.15, type: "teal" },
+      { pos: [-0.55, 0.25, -1.65], size: 0.17, type: "blue" },
+      { pos: [0.95, 0.65, -1.45], size: 0.13, type: "teal" },
+      { pos: [-0.95, 0.65, -1.45], size: 0.20, type: "adhd" },
+      { pos: [0.35, 0.85, -1.55], size: 0.14, type: "blue" },
+      { pos: [-0.35, 0.85, -1.55], size: 0.12, type: "teal" },
+
+      // Subcortical / Default Mode Network (Central Core)
+      { pos: [0.45, 0.15, 0.15], size: 0.24, type: "blue" }, // Prominent central blue hub
+      { pos: [-0.45, 0.15, 0.15], size: 0.18, type: "teal" },
+      { pos: [0.55, -0.45, -0.25], size: 0.15, type: "adhd" },
+      { pos: [-0.55, -0.45, -0.25], size: 0.16, type: "blue" },
+      { pos: [0.25, -0.25, 0.55], size: 0.17, type: "teal" },
+      { pos: [-0.25, -0.25, 0.55], size: 0.14, type: "adhd" },
+
+      // Cerebellum & Brainstem (Inferior Posterior)
+      { pos: [0.75, -1.15, -1.15], size: 0.18, type: "blue" },
+      { pos: [-0.75, -1.15, -1.15], size: 0.15, type: "teal" },
+      { pos: [0.45, -1.35, -0.85], size: 0.19, type: "adhd" },
+      { pos: [-0.45, -1.35, -0.85], size: 0.16, type: "teal" },
+      { pos: [0.15, -1.45, -0.35], size: 0.17, type: "blue" },
+      { pos: [-0.15, -1.45, -0.35], size: 0.13, type: "teal" }
+    ];
+
+    const nodePositions = nodeDefs.map((d) => new THREE.Vector3(d.pos[0] * 1.35, d.pos[1] * 1.35, d.pos[2] * 1.35));
+
+    // Connectome Tracts (Lines between nearby and homologous nodes)
+    const linePositions = [];
+    const lineColors = [];
+    const tracts = [];
+
+    const colTeal = new THREE.Color("#22d3ee");
+    const colBlue = new THREE.Color("#3b82f6");
+    const colOrange = new THREE.Color("#f97316");
+
+    function getNodeColor(type) {
+      if (type === "adhd") return colOrange;
+      if (type === "teal") return colTeal;
+      return colBlue;
+    }
+
+    for (let i = 0; i < nodePositions.length; i++) {
+      for (let j = i + 1; j < nodePositions.length; j++) {
+        const d = nodePositions[i].distanceTo(nodePositions[j]);
+        const isHomolog = Math.abs(nodePositions[i].x + nodePositions[j].x) < 0.25 && Math.abs(nodePositions[i].y - nodePositions[j].y) < 0.25;
+        if (d < 1.75 || (isHomolog && d < 2.9)) {
+          linePositions.push(nodePositions[i].x, nodePositions[i].y, nodePositions[i].z);
+          linePositions.push(nodePositions[j].x, nodePositions[j].y, nodePositions[j].z);
+
+          const c1 = getNodeColor(nodeDefs[i].type);
+          const c2 = getNodeColor(nodeDefs[j].type);
+          lineColors.push(c1.r, c1.g, c1.b);
+          lineColors.push(c2.r, c2.g, c2.b);
+
+          tracts.push({ p1: nodePositions[i], p2: nodePositions[j] });
+        }
+      }
+    }
+
+    const linesGeo = new THREE.BufferGeometry();
+    linesGeo.setAttribute("position", new THREE.Float32BufferAttribute(linePositions, 3));
+    linesGeo.setAttribute("color", new THREE.Float32BufferAttribute(lineColors, 3));
+
+    const linesMat = new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.38,
+      blending: THREE.AdditiveBlending
+    });
+    const connectomeLines = new THREE.LineSegments(linesGeo, linesMat);
+    group.add(connectomeLines);
+
+    // Glowing Neural Nodes (Spheres with custom radius)
+    const nodeSpheres = new THREE.Group();
+    const ringGroup = new THREE.Group();
+
+    nodeDefs.forEach((def, idx) => {
+      const pos = nodePositions[idx];
+      const color = getNodeColor(def.type);
+      const geo = new THREE.SphereGeometry(def.size, 20, 20);
+      const mat = new THREE.MeshBasicMaterial({
+        color,
+        transparent: true,
+        opacity: 0.95
+      });
+      const sphere = new THREE.Mesh(geo, mat);
+      sphere.position.copy(pos);
+      nodeSpheres.add(sphere);
+
+      // Targeted Active Hub Ring (as seen on the mid-left node in reference screenshot)
+      if (def.hasRing) {
+        const ringGeo = new THREE.RingGeometry(def.size * 1.55, def.size * 1.72, 32);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: colTeal,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.85
+        });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.copy(pos);
+        ringGroup.add(ring);
+      }
+    });
+    group.add(nodeSpheres);
+    group.add(ringGroup);
+
+    // Synaptic Signal Impulses (Particles streaming along tracts)
+    const N_SIGNALS = 55;
+    const signalData = [];
+    const sigGeo = new THREE.BufferGeometry();
+    const sigPos = new Float32Array(N_SIGNALS * 3);
+
+    for (let i = 0; i < N_SIGNALS; i++) {
+      const tract = tracts[Math.floor(Math.random() * tracts.length)] || tracts[0];
+      signalData.push({
+        tract,
+        progress: Math.random(),
+        speed: 0.35 + Math.random() * 0.45
+      });
+    }
+
+    sigGeo.setAttribute("position", new THREE.BufferAttribute(sigPos, 3));
+    const sigMat = new THREE.PointsMaterial({
+      color: 0x38bdf8,
+      size: 0.12,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending
+    });
+    const signalPoints = new THREE.Points(sigGeo, sigMat);
+    group.add(signalPoints);
+
+    // Ambient Micro-Particle Field (Neural voxels / space dust)
+    const N_PARTICLES = small ? 350 : 750;
+    const pPos = new Float32Array(N_PARTICLES * 3);
+    for (let i = 0; i < N_PARTICLES; i++) {
+      const r = 2.2 + Math.random() * 2.2;
+      const th = Math.random() * Math.PI * 2;
+      const ph = Math.acos(2 * Math.random() - 1);
+      pPos[i * 3] = r * Math.sin(ph) * Math.cos(th);
+      pPos[i * 3 + 1] = r * Math.sin(ph) * Math.sin(th);
+      pPos[i * 3 + 2] = r * Math.cos(ph);
+    }
+    const partGeo = new THREE.BufferGeometry();
+    partGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+    const partMat = new THREE.PointsMaterial({
+      color: 0x38bdf8,
+      size: 0.035,
+      transparent: true,
+      opacity: 0.5,
+      blending: THREE.AdditiveBlending
+    });
+    const particles = new THREE.Points(partGeo, partMat);
+    group.add(particles);
+
+    // Responsive Canvas Resize
     function resize() {
       const w = canvas.clientWidth, h = canvas.clientHeight;
       if (!w || !h) return;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+
       const wide = w / h > 1.15;
-      // keep the blob in the upper right, clear of the text and the number boxes
-      group.position.set(wide ? Math.min(2.8, 1.32 * camera.aspect) : 0.6, wide ? 0.38 : 0.85, 0);
-      group.scale.setScalar(wide ? 0.95 : 0.82);
+      // Position connectome in right hemisphere of hero view
+      group.position.set(wide ? Math.min(2.2, 1.15 * camera.aspect) : 0.25, wide ? 0.2 : 0.65, 0);
+      group.scale.setScalar(wide ? 1.05 : 0.82);
     }
     resize();
     window.addEventListener("resize", resize);
 
+    // Mouse Tracking
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
     window.addEventListener("pointermove", (e) => {
-      mouse.tx = e.clientX / window.innerWidth - 0.5;
-      mouse.ty = e.clientY / window.innerHeight - 0.5;
+      mouse.tx = (e.clientX / window.innerWidth - 0.5) * 1.5;
+      mouse.ty = (e.clientY / window.innerHeight - 0.5) * 1.5;
     }, { passive: true });
 
-    let visible = true, raf = 0, last = performance.now(), t = 0;
-    function frame(now) {
+    // Animation Loop
+    let visible = true, last = performance.now(), t = 0;
+    function animate(now) {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       t += dt;
-      mouse.x += (mouse.tx - mouse.x) * 0.05;
-      mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+      mouse.x += (mouse.tx - mouse.x) * 0.04;
+      mouse.y += (mouse.ty - mouse.y) * 0.04;
+
       const heroH = hero ? hero.offsetHeight : window.innerHeight;
-      const progress = Math.min(1, Math.max(0, window.scrollY / heroH));
-      uniforms.uTime.value = t;
-      uniforms.uMouse.value.set(mouse.x, mouse.y);
-      uniforms.uAmp.value = 0.32 + progress * 0.35;
-      group.rotation.y = t * 0.08 + mouse.x * 0.6;
-      group.rotation.x = mouse.y * 0.4;
-      points.rotation.y = -t * 0.03;
+      const scrollRatio = Math.min(1, Math.max(0, window.scrollY / heroH));
+
+      // Organic rotation + interactive mouse tilt
+      group.rotation.y = t * 0.12 + mouse.x * 0.5;
+      group.rotation.x = Math.sin(t * 0.08) * 0.08 - mouse.y * 0.35 + scrollRatio * 0.25;
+      particles.rotation.y = -t * 0.02;
+
+      // Animate synaptic impulses along tracts
+      const posAttr = sigGeo.attributes.position;
+      for (let i = 0; i < N_SIGNALS; i++) {
+        const sig = signalData[i];
+        sig.progress += sig.speed * dt;
+        if (sig.progress >= 1) {
+          sig.progress = 0;
+          sig.tract = tracts[Math.floor(Math.random() * tracts.length)] || tracts[0];
+        }
+        const p = new THREE.Vector3().lerpVectors(sig.tract.p1, sig.tract.p2, sig.progress);
+        posAttr.setXYZ(i, p.x, p.y, p.z);
+      }
+      posAttr.needsUpdate = true;
+
+      // Gentle rhythmic pulsing of node spheres
+      nodeSpheres.children.forEach((sphere, i) => {
+        const s = 1 + Math.sin(t * 2 + i * 0.5) * 0.12;
+        sphere.scale.setScalar(s);
+      });
+
+      // Pulse and orient targeting ring toward camera
+      ringGroup.children.forEach((ring) => {
+        const s = 1 + Math.sin(t * 3) * 0.14;
+        ring.scale.setScalar(s);
+        ring.quaternion.copy(camera.quaternion);
+      });
+
       renderer.render(scene, camera);
-      if (visible) raf = requestAnimationFrame(frame);
+      if (visible) requestAnimationFrame(animate);
     }
-    raf = requestAnimationFrame(frame);
+    requestAnimationFrame(animate);
+
     if (hero) {
       new IntersectionObserver(([e]) => {
         visible = e.isIntersecting;
         if (visible) {
-          cancelAnimationFrame(raf);
           last = performance.now();
-          raf = requestAnimationFrame(frame);
+          requestAnimationFrame(animate);
         }
       }).observe(hero);
     }

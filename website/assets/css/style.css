@@ -704,41 +704,6 @@ em {
   pointer-events: none;
 }
 
-.hero__blob {
-  position: absolute;
-  z-index: 0;
-  width: min(58vw, 760px);
-  aspect-ratio: 1;
-  right: -6vw;
-  top: 50%;
-  transform: translateY(-55%);
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #2563eb 35%, #0f172a 70%, transparent 72%);
-  filter: blur(2px);
-  opacity: 0.85;
-  animation: blob 12s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-.has-webgl .hero__blob {
-  display: none;
-}
-
-@keyframes blob {
-  0% {
-    border-radius: 50%;
-    transform: translateY(-55%) rotate(0deg);
-  }
-  50% {
-    border-radius: 46% 54% 58% 42% / 52% 44% 56% 48%;
-    transform: translateY(-52%) scale(1.04) rotate(8deg);
-  }
-  100% {
-    border-radius: 54% 46% 42% 58% / 44% 52% 48% 56%;
-    transform: translateY(-56%) scale(0.96) rotate(-6deg);
-  }
-}
-
 .hero::after {
   content: "";
   position: absolute;
