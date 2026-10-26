@@ -556,15 +556,15 @@
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
 
-      const isMobile = w < 680;
+      const isMobile = w < 768;
       const wide = w / h > 1.15;
       if (isMobile) {
-        group.position.set(0, 0.85, -0.6);
-        group.scale.setScalar(0.68);
+        group.position.set(0, 0.85, -0.8);
+        group.scale.setScalar(0.62);
       } else {
-        // Position connectome in right hemisphere of hero view, vertically aligned with title
-        group.position.set(wide ? Math.min(2.2, 1.15 * camera.aspect) : 0.35, wide ? 0.36 : 0.65, 0);
-        group.scale.setScalar(wide ? 1.05 : 0.85);
+        // Position connectome in right quadrant of hero view with ample breathing room
+        group.position.set(wide ? Math.min(3.2, 1.65 * camera.aspect) : 0.5, wide ? -0.15 : 0.4, 0);
+        group.scale.setScalar(wide ? 0.78 : 0.65);
       }
     }
     resize();
